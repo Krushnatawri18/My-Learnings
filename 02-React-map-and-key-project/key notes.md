@@ -3,6 +3,7 @@
 - It uses this to optimize rendering and avoid unnecessary DOM operations.
 
 1. Without Keys
+
 eg.
 ```
 users.map((user) => (
@@ -18,6 +19,7 @@ users.map((user) => (
 
 
 2. With Index as Key (Not recommended by React)
+
 eg.
 ```
 users.map((user, index) => (
