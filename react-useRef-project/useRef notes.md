@@ -5,7 +5,9 @@
 ### Usecases -
 1. Helps a variable to persist its value whether component renders or not.
 eg.
+```
 let val = useRef(initialValue);
+```
 
 here useRef returns an object having field current which stores the value
 {
@@ -19,6 +21,7 @@ On the next renders, useRef will return the same object.
 - On state change, component re-renders but on useRef variable change, no re-rendering happens.
 
 ### Problem -
+```
 function App() {
   const [count, setCount] = useState(0);
   let val = 1;
@@ -44,8 +47,10 @@ function App() {
 }
 
 export default App
+```
 
 ### Solution -
+```
 function App() {
   const [count, setCount] = useState(0);
   let val = useRef(0);
@@ -70,10 +75,12 @@ function App() {
 }
 
 export default App
+```
 
 2. With useRef, you can access or change any element present in DOM directly.
 
 eg.
+```
 function App() {
   const [count, setCount] = useState(0);
   let val = useRef(0);
@@ -110,8 +117,10 @@ function App() {
 }
 
 export default App
+```
 
 eg.
+```
 function App() {
   const [time, setTime] = useState(0);
   let timerRef = useRef();
@@ -154,11 +163,13 @@ function App() {
     </>
   )
 }
+```
 
 ### Note
 -  If ref.current holds an object that is used for rendering (for example, a piece of your state), then you shouldn’t mutate that object.
 
 ### Problem -
+```
 function App() {
   const user = useRef({name: 'Krushna', age:'22'});
 
@@ -174,8 +185,10 @@ function App() {
     </>
   )
 }
+```
 
 ### Solution -
+```
 function App() {
   const [user, setUser] = useState({ name: 'Krushna', age: '22' });
 
@@ -190,11 +203,13 @@ function App() {
     </>
   )
 }
+```
 
 ### Note
 - Do not write or read ref.current during rendering, except for initialization. 
 
 eg.
+```
 function MyComponent() {
   const inputRef = useRef();
 
@@ -205,6 +220,7 @@ function MyComponent() {
 
   return <input ref={inputRef} />;
 }
+```
 
 - Use it inside useEffect, setTimout and event handlers.
 
