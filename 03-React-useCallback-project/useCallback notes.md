@@ -157,9 +157,6 @@ export default App
 ```
 
 ### Difference between useMemo and useCallback
-Hook	       Returns	      Purpose	                           Use Case
-useMemo	       Value/result	  Avoid recalculating expensive data   Computed values
-useCallback	   Function	      Avoid re-creating functions	       Stable function props
 
 1. useMemo 
 - Returns a memoized value.
