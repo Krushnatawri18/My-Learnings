@@ -3,7 +3,10 @@
 - Prevents unnecessary expensive operations/task/calculations.
 
 eg.
+```
 const cachedValue = useMemo(calculateValue, dependencies)
+```
+
 calculateValue - A function calculating the value that you want to cache between re-renders.
 dependencies - The list of all reactive values referenced inside of the calculateValue code. 
 
@@ -12,6 +15,7 @@ Returns - On the initial render, useMemo returns the result of calling calculate
 ### Problem -
 
 eg.
+```
 import { useState } from 'react'
 import './App.css'
 
@@ -58,20 +62,25 @@ function App() {
 }
 
 export default App
+```
 
 ### Solution -
 
 eg.
+```
 // this function will be called only when inputValue changes 
 let doubleValue = useMemo(() => expensiveTask(inputValue), [inputValue]);
+```
 
 ### Note
 - A calculation function that takes no arguments, like () =>, and returns what you wanted to calculate.
 
 eg.
+```
 const memoizedValue = useMemo(() => {
   return computeExpensiveValue(a, b);
 }, [a, b]);
+```
 
 - Even though the function body uses a and b, they are captured from scope, not passed in as arguments.
 - Because React calls this function itself, it doesn’t give it parameters — so it must take no arguments.
@@ -88,6 +97,7 @@ const memoizedValue = useMemo(() => {
 - Pass it as a prop to a component wrapped in memo so to skip re-rendering if the value hasn’t changed.
 
 eg.
+```
 import { useMemo } from 'react';
 import List from './List.js';
 import { filterTodos } from './utils.js'
@@ -104,10 +114,12 @@ export default function TodoList({ todos, theme, tab }) {
     </div>
   );
 }
+```
 
 - The value you’re passing is later used as a dependency of some Hook.
 
 eg.
+```
 const visibleTodos = useMemo(() => {
   return filterTodos(todos, tab);
 }, [todos, tab]);
@@ -115,25 +127,28 @@ const visibleTodos = useMemo(() => {
 useEffect(() => {
   console.log("Visible todos changed!");
 }, [visibleTodos]);
+```
 
 - W/o useMemo, visibleTodos is recalculated on every render causing re-running of useEffect even if todos and tab didn't change.
 - With useMemo, visibleTodos is recalculated when todos or tab change.
 
 eg.
-    function ChatRoom({ roomId }) {
-        const [message, setMessage] = useState('');
+```
+function ChatRoom({ roomId }) {
+    const [message, setMessage] = useState('');
 
-        const options = {
-            serverUrl: 'https://localhost:1234',
-            roomId: roomId
-        };
+    const options = {
+        serverUrl: 'https://localhost:1234',
+        roomId: roomId
+    };
 
-        useEffect(() => {
-            const connection = createConnection(options);
-            connection.connect();
-            return () => connection.disconnect();
-        }, [options]); // 🔴 options changes every render!
-    }
+    useEffect(() => {
+        const connection = createConnection(options);
+        connection.connect();
+        return () => connection.disconnect();
+    }, [options]); // 🔴 options changes every render!
+}
+```
 
 - Creates a new object in memory even if roomId hasn't changed, making it re-run useEffect.
 
@@ -142,6 +157,7 @@ eg.
 1. Memoizing individual JSX nodes 
 
 eg.
+```
 export default function TodoList({ todos, tab, theme }) {
   const visibleTodos = useMemo(() => filterTodos(todos, tab), [todos, tab]);
   const children = useMemo(() => <List items={visibleTodos} />, [visibleTodos]);
@@ -151,11 +167,12 @@ export default function TodoList({ todos, tab, theme }) {
     </div>
   );
 }
+```
 
 2. Memoizing the dependency of another hook
 
 eg.
-eg.
+```
 function Dropdown({ allItems, text }) {
   const searchOptions = useMemo(() => {
     return { matchMode: 'whole-word', text };
@@ -165,10 +182,12 @@ function Dropdown({ allItems, text }) {
     return searchItems(allItems, searchOptions);
   }, [allItems, searchOptions]); // Only changes when allItems or searchOptions changes
 }
+```
 
 3. Memoizing the function
 
 eg.
+```
 const handleSubmit = useMemo(() => {
     return (orderDetails) => {
       post('/product/' + productId + '/buy', {
@@ -177,3 +196,4 @@ const handleSubmit = useMemo(() => {
       });
     };
 }, [productId, referrer]);
+```
