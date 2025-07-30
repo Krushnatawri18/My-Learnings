@@ -15,6 +15,7 @@ payload: 5  // payload if any
 ```
 
 and executes the logic
+
 4. Then store updates the state
 5. Shown in UI
 
@@ -104,9 +105,9 @@ export const store = configureStore({
 ```
 
 - You interact with it by:
-1. dispatch(action) → to send updates
-2. getState() → to read current state
-3. subscribe() → to listen for changes (usually React handles this)
+a. dispatch(action) → to send updates
+b. getState() → to read current state
+c. subscribe() → to listen for changes (usually React handles this)
 
 5. State
 - Data that you wanted to manage in store.
