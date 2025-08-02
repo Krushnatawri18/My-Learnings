@@ -1,10 +1,35 @@
-import React from 'react'
-import SlowSearch from './components/SlowSearch'
+import { useState } from 'react';
+import TabButton from './components/TabButton.jsx';
+import AboutTab from './components/AboutTab.jsx';
+import PostsTab from './components/PostsTab.jsx';
+import ContactTab from './components/ContactTab.jsx';
 
-const App = () => {
+export default function TabContainer() {
+  const [tab, setTab] = useState('about');
   return (
-    <div><SlowSearch /></div>
-  )
+    <>
+      <TabButton
+        isActive={tab === 'about'}
+        action={() => setTab('about')}
+      >
+        About
+      </TabButton>
+      <TabButton
+        isActive={tab === 'posts'}
+        action={() => setTab('posts')}
+      >
+        Posts (slow)
+      </TabButton>
+      <TabButton
+        isActive={tab === 'contact'}
+        action={() => setTab('contact')}
+      >
+        Contact
+      </TabButton>
+      <hr />
+      {tab === 'about' && <AboutTab />}
+      {tab === 'posts' && <PostsTab />}
+      {tab === 'contact' && <ContactTab />}
+    </>
+  );
 }
-
-export default App

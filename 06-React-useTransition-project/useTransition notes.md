@@ -211,3 +211,16 @@ startTransition(async () => {
 
 ```
 
+### Note
+- Multiple transitions are batched together as one transition .
+
+eg.
+```
+startTransition(() => {
+  setStateA(expensiveA());
+});
+
+startTransition(() => {
+  setStateB(expensiveB());
+});
+```
