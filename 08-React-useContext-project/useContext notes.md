@@ -64,3 +64,18 @@ export default ChildA
 - Whenever any value from context changes then React will re-render all the components that consume that context.
 - This re-render happens only if the new value is different from the old value.
 
+### Difference between useContext and Redux
+
+### useContext
+
+- Built in react
+- Prop drilling alternative, not a state manager (needs useState)
+- Distributes values via Provider
+- Used when have low complexity
+
+### Redux
+
+- Need to install
+- State management library
+- Centralized store
+- Used when have high complexity
