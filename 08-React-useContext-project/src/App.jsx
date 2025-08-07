@@ -9,10 +9,10 @@ function App() {
   const [theme, setTheme] = useState('light');
   const [user, setUser] = useState({
     id: 1,
-    name: 'Kanha'
+    name: 'User'
   });
 
-  const contextValue = {theme};
+  const contextValue = { theme };
 
   return (
     <>
@@ -20,7 +20,9 @@ function App() {
         <ThemeContext.Provider value={{ theme, setTheme, contextValue }}>
           <div id='container' style={{ backgroundColor: theme === 'light' ? "beige" : "black", color: theme === 'light' ? 'black' : 'white' }}>
             <ChildA />
-            <button onClick={() => setTheme(theme  => theme)}>Trigger re-render</button>
+            <div>
+              <button onClick={() => setTheme(theme => theme)}>Trigger re-render</button>
+            </div>
           </div>
         </ThemeContext.Provider>
       </UserContext.Provider>
