@@ -39,25 +39,43 @@ eg.
 
 # .github/workflows/ci-cd.yml
 
+```
 name: CI/CD Workflow
 
 // events
+
 on: 
+
   push:
+
     branches: [main]
+
   pull_request:
+
     branches: [main]
 
 // executable code
+
 jobs:
+
   build-test:
+
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3  // checking out into the new code branch, source : https://github.com/actions/checkout
+
+        // checking out into the new code branch, source : https://github.com/actions/checkout
+
+      - uses: actions/checkout@v3  
+
       - name: Install dependencies
+
         run: npm install
+
       - name: Run tests
+
         run: npm test
+```
 
 ### Idea
 Listen to event -> Trigger workflow
