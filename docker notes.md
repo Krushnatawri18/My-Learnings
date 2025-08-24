@@ -4,6 +4,10 @@
 - eg.
 App code, Runtime (Python, Node), Dependencies (libraries, modules), Config files (.env), System tools (bash, curl)
 - Not include full OS and OS kernel(that interacts with hardware)
+-- To setup an environment for our existing application in one's machine, we need to run multiple commands and configure
+a. Compatibility/Dependency with OS
+b. Long setup time
+c. Different Dev/Test/Prod environments 
 
 ### How development process works with containers
 - Start the service as a Docker container with command
@@ -133,6 +137,18 @@ eg.
 ### Note
 - VM images can be generated which includes OS (Windows, Linux) + code + dependencies, which can be used to virtualize to test that code/software on in different environment like different versions, configurations (RAM, Disk types, No of cores).
 - eg. Checking particular code which uses like Python with another version like in our previous vm, if we used python 3.8.1 and now in new vm we are using python 3.12.2
+
+### Docker Desktop
+- Docker Desktop which helps to run any OS on any OS kernel based docker.
+- So it just uses Hypervisor layer with lightweight Linux distribution which helps to provide Linux kernel to Linux containers to run on Windows or MacOS. 
+
+# Installing Docker Desktop
+1. Docker Engine
+- A server who manages images & containers.
+
+2. Docker CLI - Client
+- To communicate with Docker Engine.
+- Execute docker commands to start/stop containers
 
 ### Docker images vs Docker containers
 1. Docker images
