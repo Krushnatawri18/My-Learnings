@@ -134,3 +134,86 @@ eg.
 - VM images can be generated which includes OS (Windows, Linux) + code + dependencies, which can be used to virtualize to test that code/software on in different environment like different versions, configurations (RAM, Disk types, No of cores).
 - eg. Checking particular code which uses like Python with another version like in our previous vm, if we used python 3.8.1 and now in new vm we are using python 3.12.2
 
+### Docker images vs Docker containers
+1. Docker images
+- Package that contains code, runtime environment (python, java), libraries, configuration files and OS dependencies.
+
+2. Docker containers
+- Running instance of image where image command runs.
+
+### Note
+- With single docker image, you can run multiple containers of that application.
+
+### How do we get images to run containers
+- Docker Registery stores the images which finds and shares the images
+- Docker Hub is one of the biggest docker registery
+
+### Note
+- Docker official images are the secure base images created and maintained by Docker community and verified publishers,collaborated with security experts and software maintainers in order to manage the content of that repository.
+
+### Image Versioning
+- Different images of different version of that particular technology or tool is versioned.
+- Different versions of these images are called as tags.
+- eg. mongo server 7.0, mongo server 7.1
+
+### Commands
+1. docker images
+- List all the images
+
+2. docker ps
+- List all the running containers
+
+3. docker pull servicer_name:tag(version)
+- Pulls that particular versioned image
+
+4. docker run service_name:tag(version)
+- To run particular service versioned image or runs and downloads that particular service image if you didn't pulled it yet
+
+5. docker run -d service_name:tag(version) d = detach mode
+- To run docker container in detach mode so not to block whole terminal
+
+6. docker stop container_id
+- To stop particular docker container
+
+7. docker run -d -p Host_port:Container_port service_name:tag(version) 
+- To bind host port with container port(running on its network and port) so we can access that particular service on our localhost or outside world (port binding)
+eg.
+
+```
+docker run -d -p 9000:80 nginx:1.23
+```
+
+8. docker logs container_id/container_name
+- To see logs for that particular container
+
+9. docker start existing_stopped_container_id
+- To run existing stopped container
+
+10. docker run --name name_of_container_you_want_to_set -d service_name:tag(version)
+- To give name to the container
+
+### Note
+1.  Docker generates random name for container if you don't specify it.
+
+2. Its standard to use same port on your host as container's port eg. 27017 :27017 for mongodb.
+
+3. The new container created every single time when we run this command
+
+```
+docker run ...
+```
+
+4. If you ran this above command multiple times then multiple containers will be created but if try to see it with 
+
+```
+docker ps
+```
+
+it will only show running instance of container, to see all existing containers of your machine, run
+
+```
+docker ps -a
+```
+
+a shows all running and stopped containers.
+
