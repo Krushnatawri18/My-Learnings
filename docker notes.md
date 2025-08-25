@@ -233,3 +233,26 @@ docker ps -a
 
 a shows all running and stopped containers.
 
+### Docker Registries
+1. Private
+- Can't be accessed without authentication
+- eg. Amazon ECR, Google container registry, Nexus
+
+2. Public
+- Can be used or downloaded by anyone
+
+### Docker Registry vs Repository
+1. Docker Registry
+- Its warehouse for storing images
+- Collection of repositories
+eg. Public - Docker Hub, Private - Amazon ECR
+
+2. Repository
+- Its like folder inside registry which has all the images of all the versions of that particular service
+eg.
+    Nginx - Repository
+     +-------------------------------+                   
+     | nginx: 1.21                   |                   
+     | nginx: 1.22                   |                   
+     | nginx: latest                 |                   
+     +-------------------------------+  
