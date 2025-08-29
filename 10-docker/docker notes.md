@@ -208,6 +208,15 @@ docker run -d -p 9000:80 nginx:1.23
 10. docker run --name name_of_container_you_want_to_set -d service_name:tag(version)
 - To give name to the container
 
+11. docker build -t name_of_application_image:tag(version) directory_path_of_dockerfile
+- To build image for your application with version
+eg.
+
+```
+docker build -t node-app:1.0 .
+```
+
+
 ### Note
 1.  Docker generates random name for container if you don't specify it.
 
