@@ -1,6 +1,7 @@
 const express = require('express');
 const dbConnect = require('./config/database');
 const todoRoutes = require('./routes/todos');
+const postRoutes = require('./routes/posts');
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 
 // adding routes with versioning
 app.use('/api/v1', todoRoutes);
+app.use('/api/v1', postRoutes);
 
 app.listen(PORT, () => {
     console.log(`App is running on ${PORT}`);
