@@ -115,10 +115,56 @@ const postSchema = new mongoose.Schema({
 ### Update operator
 
 1. push
+- Addes item into an array.
+- eg.
+```js
+await User.updateOne({ _id: userId },
+  { $push: { hobbies: "reading" } });
+```
 
 2. pull
+- Removes all matching values from an array.
+- eg.
+```js
+await User.updateOne({ _id: userId },
+  { $pull: { hobbies: "reading" } });
+```
+
+3. pop
+- Removes first or last item from an array.
+- eg.
+```js
+await User.updateOne({ _id: userId },
+  { $pop: { hobbies: -1 } });  // removes first item
+
+  await User.updateOne({ _id: userId },
+  { $pop: { hobbies: 1 } });  // removes last item
+```
+
+4. Rename
+- Renames the field.
+- eg.
+```js
+await User.updateOne({ _id: userId },
+  { $rename: { oldFieldName: "newFieldName" } });
+```
+
+5. set
+- Sets the value of field.
+- eg.
+```js
+await User.findByIdAndUpdate({ _id: userId },
+  { $set: { name: "Krushna" } });
+```
 
 ### Populate
+- Replaces a reference document's id with the actual document data.
+- eg.
+```js
+await User.find()
+  .populate('post')
+  .populate('comments.user') // nested populate
+```
 
 ### Note
 - Another way to crate a document, we can use use save() operation, which is asynchronous operations which needs await so that it will wait until saved document get resolved.
