@@ -2,7 +2,7 @@ const Post = require('../models/Post.Js');
 
 exports.getPosts = async(req, res) => {
     try{
-        const posts = await Post.find({});
+        const posts = await Post.find({}).populate('comments').exec();
 
         if(!posts){
             return res.status(500).json({

@@ -1,30 +1,38 @@
+const Like = require('../models/Like');
 const Post = require('../models/Post.Js')
 
 exports.unlikePost = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { post, like } = req.body;
 
-        if (!id) {
+        if (!post || !like) {
             return res.status(500).json({
                 success: false,
-                message: 'Incomplete like info'
+                message: 'Incomplete unlike info'
             });
         }
 
-        const post = await Post.findById({ _id: id });
+        const postAvailable = await Post.findById({ _id: post });
+        const likeAvailable = await Like.findById({ _id: like });
 
-        if (!post) {
+        if (!postAvailable || !likeAvailable) {
             return res.status(500).json({
                 success: false,
                 message: 'Invalid id'
             });
         }
 
-        await Post.findByIdAndUpdate({ _id: id }, { like: false });
+        // updating Like collection
+        const updatedLike = await Like.findOneAndDelete({ _id: like, post: post });
+
+        const updatedPost = await Post.findByIdAndUpdate({ _id: post }, { $pull: { likes: updatedLike._id } }, { new: true })
+        .populate('likes')
+        .exec();
 
         return res.status(200).json({
             success: true,
-            post: post,
+            post: updatedPost,
+            like: updatedLike,
             message: 'Like removed successfully'
         });
     }

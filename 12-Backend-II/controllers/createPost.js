@@ -2,8 +2,7 @@ const Post = require('../models/Post.Js')
 
 exports.createPost = async (req, res) => {
     try {
-        const { title, description, like } = req.body;
-        console.log(title, description);
+        const { title, description } = req.body;
 
         if (!title || !description) {
             return res.status(500).json({
@@ -12,11 +11,15 @@ exports.createPost = async (req, res) => {
             });
         }
 
-        const post = await Post.create({ title, description, like });
+        const post = new Post({
+            title, description
+        });
+
+        const savedPost = await post.save();
 
         return res.status(200).json({
             success: true,
-            post: post,
+            post: savedPost,
             message: 'Post created successfully'
         });
     }
@@ -29,4 +32,8 @@ exports.createPost = async (req, res) => {
             message: 'Error in creating a post'
         });
     }
+}
+
+exports.dummyPost = async (req, res) => {
+    res.send(`<h1>Dummy Post</h1>`);
 }
