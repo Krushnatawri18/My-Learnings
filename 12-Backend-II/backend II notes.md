@@ -31,7 +31,7 @@ and run with command ```npm run dev```.
 - Library that imports environment variables from .env into your runtime environment i.e. process.env
 
 ### Note
-- Either you can export with ```module.exports``` or ```exports.name_of_something_to_import```.
+- You can export either with ```module.exports``` or ```exports.name_of_something_to_import```.
 
 ### Relationships
 
@@ -137,7 +137,7 @@ await User.updateOne({ _id: userId },
 await User.updateOne({ _id: userId },
   { $pop: { hobbies: -1 } });  // removes first item
 
-  await User.updateOne({ _id: userId },
+await User.updateOne({ _id: userId },
   { $pop: { hobbies: 1 } });  // removes last item
 ```
 
@@ -248,3 +248,15 @@ const newest = await User.find().sort({createdAt/_id: -1}).limit(5) // finds rec
 
 const page2 = await User.find().skip(10).limit(10) // skip first 10 users (pagination)
 ```
+
+### Middleware
+- Refers to a function that processes incoming HTTP requests and perform actions such as modifying the request or response object, invoking next middleware function, etc.
+- Used with ``app.use()`` method.
+- Used in 
+1. Logging
+
+2. Authenticating users to check if they are authorized to access certain resources
+
+3. Parsing
+
+4. Error handling
