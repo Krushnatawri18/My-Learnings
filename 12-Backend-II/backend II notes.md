@@ -254,6 +254,13 @@ const page2 = await User.find().skip(10).limit(10) // skip first 10 users (pagin
 - Used with ``app.use()`` method.
 - Used in 
 1. Logging
+- Logging HTTP requests.
+- Need to import ``npm i morgan`` and use it in code like 
+```js
+app.use(morgan('dev/tiny'))
+```
+
+- Output will be like ``POST /api/v1/createPost 200 250.987 ms - 367``
 
 2. Authenticating users to check if they are authorized to access certain resources
 
