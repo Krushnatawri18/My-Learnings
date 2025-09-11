@@ -135,12 +135,12 @@ eg.
 - Object Document Mapper, helps to interact with NoSQL databases using objects in your code.
 - Allows you to define schema, create model and use that model for CRUD operations in your code w/o writing db queries manually.
 - eg.
-```javascript
+```js
 // w/o ODM
-db.users.insertOne({ name: "Krushna", age: 25 }); 
+db.users.insertOne({ name: "Krushna", age: 25 }); // raw mongodb queries
 ```
 
-```javascript
+```js
 // with ODM
 const User = mongoose.model('User', { name: String, age: Number });
 
@@ -153,7 +153,7 @@ newUser.save();
 
 eg.
 
-```javascript
+```js
 const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost:27017/myDatabase', {})

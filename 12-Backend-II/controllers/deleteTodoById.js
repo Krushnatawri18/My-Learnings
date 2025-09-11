@@ -12,6 +12,7 @@ exports.deleteTodoById = async (req, res) => {
             });
         }
 
+        // returns deleted document if stored in variable
         await Todo.findByIdAndDelete({ _id: id });
 
         return res.status(200).json({

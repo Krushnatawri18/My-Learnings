@@ -38,7 +38,7 @@ and run with command ```npm run dev```.
 1. One-to-one relationship
 - One document related to one other document.
 - eg.
-```javascript
+```js
 const mongoose = require('mongoose');
 
 const commentSchema = new mongoose.Schema({
@@ -63,7 +63,7 @@ module.exports = mongoose.model('Comment', commentSchema);
 2. One-to-many relationship
 - One document related to many other documents.
 - eg.
-```javascript
+```js
 const mongoose = require('mongoose');
 
 const postSchema = new mongoose.Schema({
@@ -76,7 +76,7 @@ const postSchema = new mongoose.Schema({
     likes: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Like'
+            ref: 'Like'  // its similar to foreign key in sql
         }
     ],
 });
@@ -87,7 +87,7 @@ module.exports = mongoose.model('Post', postSchema);
 3. Many-to-many relationships
 - Many documents related to many other documents.
 - eg.
-```javascript
+```js
 const userSchema = new mongoose.Schema({
   name: String,
   // user can have multiple liked posts
@@ -124,7 +124,7 @@ const postSchema = new mongoose.Schema({
 - Another way to crate a document, we can use use save() operation, which is asynchronous operations which needs await so that it will wait until saved document get resolved.
 - Without await, it will work but may throw error while accessing savedComment._id as till now may be promise would not have resolved.
 - eg.
-``` javascript
+``` js
 // creates an instance of comment and returns whole comment document
     const comment = new Comment({
         post, user, body
@@ -140,4 +140,65 @@ const postSchema = new mongoose.Schema({
         { new: true })
         .populate('comments')
         .exec();
+```
+
+### Mongoose Queries
+
+1. ``Model.find()``
+- Finds all documents matching the query.
+- If no filter then returns all documents.
+- eg.
+``` js
+const users = await User.find({}) // finding all users
+
+const adults = await User.find({age: {$gt: 18}}) // finding all users whose age is greater than 18
+
+const selected = await User.find({}, "name email") // finding all documents with name and email fields only
+```
+
+2. ``Model.findOne()``
+- Returns the first matching document.
+- eg.
+```js
+const user = await User.findOne({email: "email@gmail.com"}) // if not found returns null
+
+const selected = await User.findOne({ email: "email@gmail.com" }, 'name').exec() // finding first document with filter and name field only
+```
+
+3. ``Model.findOneAndUpdate()`` (similar works for ``findOneAndDelete()``)
+- Similar to ``findByIdAndUpdate()``, but you can give any filter not just id.
+- eg.
+```js
+const updated = await User.findOneAndUpdate({name: 'Krishna'}, {age: 22}, {new: true})
+```
+
+### Note
+- ```deleteOne()``` and ```updateOne()``` works similar as ```findOne()``` finds first document and performs particular operation.
+- ```findOneAndRemove()``` is deprecated use ```findOneAndDelete()```.
+
+4. ``Model.deleteMany()`` (similar works for ``updateMany()``)
+- Deletes all documents matching the filter.
+- eg.
+```js
+await User.deleteMany({age: {$lt: 18}}) // for less than
+// retuns result object like 
+{acknowledged: true, deletedCount: 3}
+```
+
+5. ``countDocuments()``
+- Counts number of documents matching filter.
+- eg.
+```js
+const count = await User.countDocuments({age: {$gte: 18}}) // for greater than or equal to 
+```
+
+6. ``sort(), limit(), skip()``
+- Used with queries for pagination and sorting.
+- eg.
+```js
+const oldest = await User.find().sort({_id: 1}).limit(5) // finds oldest 5 docs
+
+const newest = await User.find().sort({createdAt/_id: -1}).limit(5) // finds recent 5 docs
+
+const page2 = await User.find().skip(10).limit(10) // skip first 10 users (pagination)
 ```
