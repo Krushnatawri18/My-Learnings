@@ -69,3 +69,40 @@ exports.createEmployee = async (req, res) => {
         });
     }
 }
+
+exports.getEmployeeByName = async (req, res) => {
+    try {
+        const { name } = req.query;
+
+        if (!name) {
+            return res.status(500).json({
+                success: false,
+                message: 'Incomplete employee info'
+            });
+        }
+
+        // for insensitive case
+        const employeeDetails = await Employee.find({ name: { $regex: name, $options: 'i' } });
+        if (!employeeDetails) {
+            return res.status(404).json({
+                success: false,
+                message: 'No employee found'
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: employeeDetails,
+            message: 'Fetched employee successfully'
+        });
+    }
+    catch (err) {
+        console.error(err);
+        console.log(err);
+        return res.status(500).json({
+            success: false,
+            error: err.message,
+            message: 'Error in fetching a employee'
+        });
+    }
+}

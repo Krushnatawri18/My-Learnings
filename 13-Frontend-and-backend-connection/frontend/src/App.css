@@ -15,6 +15,39 @@
   color: white;
 }
 
+.home-container{
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(43, 43, 43);
+  overflow: hidden;
+}
+
+.navbar-container{
+  width: 100%;
+  height: 10vh;
+  background-color: black;
+  border-bottom: 1px solid rgb(129, 129, 129);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: end;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.employee-container{
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .employee-form{
   display: flex;
   align-items: center;
@@ -42,14 +75,15 @@
   margin: 2px 0px;
 }
 
-.employee-details input{
+.employee-details input,
+.search-employee-details input{
   padding: 6px;
   border-radius: 5px;
   font-family: 'Poppins', sans-serif;
   margin-bottom: 4px;
 }
 
-.add-employee-button, .get-all-employee{
+.add-employee-button, .get-all-employee, .search-employee{
   margin-top: 20px;
   padding: 6px;
   border-radius: 5px;
@@ -59,7 +93,8 @@
 }
 
 .add-employee-button:hover,
-.get-all-employee:hover{
+.get-all-employee:hover,
+.search-employee:hover{
   background-color: black;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -67,4 +102,19 @@
 
 .get-employee-details{
   color: white;
+}
+
+.not-found-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-margin{
+  margin-left: 10px;
+}
+
+input:focus {
+  outline: none;
 }

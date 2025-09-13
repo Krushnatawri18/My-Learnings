@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import '../App.css'
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const EmployeeForm = () => {
     const [employeeData, setEmployeeData] = useState({
@@ -12,24 +13,38 @@ const EmployeeForm = () => {
 
     const navigate = useNavigate();
 
-    const submitHandler = async(e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
 
-        const response = await fetch(
+        const createEmployeePromise = fetch(
             `${process.env.REACT_APP_BASE_URL}/create-employee`,
             {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({...employeeData})
+                body: JSON.stringify({ ...employeeData })
             }
         )
-        
-        if(!response.ok){
-            throw new Error('Failed to create employee');
-        }
 
+        const response = await toast.promise(
+            createEmployeePromise,
+            {
+                loading: 'Saving...',
+                success: 'Employee created successfully!',
+                error: 'Failed to create employee',
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error('Failed to create an employee');
+        }
+        setEmployeeData({
+            name: '',
+            employeeId: '',
+            email: '',
+            company: ''
+        });
         navigate('/');
     }
 
