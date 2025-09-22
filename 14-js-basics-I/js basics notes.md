@@ -18,7 +18,7 @@
 
 2. ``Execution phase (Code/Thread of execution)``
 - Reads code line by line and assigns the values of variables.
-- For function call, creates another function context and returns value to the function.
+- For function call, creates a function context and returns value to the main execution context from where function call is invoked.
 
 eg.
 ```js
@@ -93,5 +93,18 @@ square2: 64
 
 ![alt text](image.png)
 
+``Total flow``
+
+![alt text](image-2.png)
+
 #### Note
+- For ``let, const, objects, arrays``, it shows ``uninitialized or not available, in Temporal Dead Zone(variable is inaccessible until initialized with value)``
+
 - ``JavaScript is a synchronous single-threaded language.``
+
+### Call Stack
+- To manage the order of execution of execution contexts.
+- Has Global context at start of execution then pushes function context whenever function is invoked and after completion of function popped back.
+- Follows LIFO principle.
+
+![alt text](image-4.png)
