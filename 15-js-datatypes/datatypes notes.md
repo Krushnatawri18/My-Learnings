@@ -290,9 +290,31 @@ console.log("5" + 1);
 console.log(1 + "5");
 console.log("5" - 1); // here "5" will be converted into 5 cause operator '-' does only subtraction thing
 
+console.log('5' == 5,
+    false == 0,  // true → false is coerced to number 0
+    true == 1,   // true → true is coerced to number 1
+    '' == 0,     // true → empty string is coerced to number 0
+    null == false,
+    undefined == false)
+
 // Explicit Coercion
 console.log(Number("5") + 1); // 6
 console.log(String(1) + "5"); // 15
+```
+
+## `Type Coercion Rules`
+### 1. Coercion always tries to convert to Number, String, Boolean or Primitive.
+### 2. Priorites
+```js
+Arithmetic(+,-) -> Number(unless with string)
+Comparison(==) -> Number or Primitive
+if, while, !, ? => Boolean
+Object to primitive -> String or Number
+```
+```js
+// convert ![] first because of higher precedence of !
+console.log([] == ![])  // [] is true, !true(![]) is false
+// [] == false -> "" == false -> 0 == false -> true
 ```
 
 ### `Note`
@@ -308,8 +330,104 @@ console.log(2 * "Hello")
 ```
 
 ## `Truthy vs Falsy Values`
-### 1. `Falsy values`
-- O, -0, 0n, false, null, undefined, NaN, ""
+### 1. `Falsy values` - when used in comparision context
+- O, -0, 0n, false, null, undefined, NaN, "", document.all
 
 ### 2. `Truthy values`
 - [], {}, 12, 'name'
+
+### `Note`
+- Comparing falsy values with false doesn't mean they're same, they're only considered as false when used in boolean context like in `if` condition.
+```js
+// falsy == false
+console.log(null == false)  // false
+console.log(undefined == false)  // false
+console.log([] == false) // true - type coercion
+console.log(-0 == false) // true - type coercison
+console.log("" == false) // true - type coercison
+
+// truthy == true
+console.log("hello" == true) // false, "hello" -> into number -> but can't -> NaN == true(1)
+console.log({} == true)  // false, {} -> into string -> "[object Object]" -> into number -> NaN == true(1)
+console.log([] == true)  // false, [] -> into string -> "" -> into number -> 0 == 1
+```
+
+### `Loose and Strict Equality`
+### 1. `Loose Equality`
+- Compares values after type coercion if needed.
+- Types doesn't matter.
+```js
+'1' == 1        // true (string → number)
+true == 1       // true (true → 1)
+false == 0      // true (false → 0)
+null == undefined // true (special case)
+0 == ''         // true ('' → 0)
+'0' == false    // true ('0' → 0, false → 0)
+```
+- Exception `undefined == null` returns `true`.
+
+### 2. `Strict Equality`
+- Compares both value and type.
+- No type coercion.
+```js
+1 === 1         // true
+'1' === 1       // false (string !== number)
+true === 1      // false (boolean !== number)
+null === undefined // false
+```
+
+## `Undefined vs Null`
+### 1. `Undefined`
+- Automatically assigned by Js when
+#### a. When a variable is declared but not initialized.
+#### b. When a function does not explicitly return a value.
+#### c. When accessing non-existent property of an object or an array.
+```js
+let x;
+console.log(x) // undefined
+
+function base(){
+    console.log('In a base')
+    // return 2;
+}
+
+function func(){
+    let value;
+    console.log(value)   // undefined
+    console.log(base())  // doesn't get returned value - undefined
+}
+func()
+
+let object = {}
+console.log(obj.property) // undefined
+
+let arr = []
+console.log(arr[2])  // undefined
+```
+
+### 2. `Null`
+- Null value is explicitly given by developer.
+- Represents absence of value or reset a variable.
+```js
+let y = null;
+console.log(y); // null
+let obj = { property: null };
+console.log(obj.property); // null
+```
+
+### `Note`
+- `typeof []` returns `object`.
+- `typeof function f(){}` returns 'function`.
+- To find real type of any array or function we use `instanceof`.
+- `instanceof` only works with `reference` type not with `primitive` type.
+```js
+// variable instanceof Class
+console.log(f1 instanceof Function) // true
+console.log(arr instanceof Array) // true
+
+console.log(12 instanceof Number)  // false
+console.log("name" instanceof String)  // false
+console.log(true instanceof Boolean)  // false
+console.log(Symbol('a') instanceof Symbol)  // false
+console.log(10000000000000000000000n instanceof BigInt)  // false
+```

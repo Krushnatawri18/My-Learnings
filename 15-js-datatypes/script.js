@@ -104,8 +104,16 @@ console.log(z, typeof z)
 console.log("5" + 1);
 console.log(1 + "5");
 console.log("5" - 1);
+console.log(null == false)
+console.log(undefined == false)
+console.log([] == false)
+console.log(-0 == false)
+console.log("" == false)
+console.log([] == ![])  // [] is true, !true(![]) is false
+// [] == false -> "" == false -> 0 == false -> true
 
 // Truthy & Falsy Values
+console.log('Truthy and falsy values')
 console.log(!!undefined)
 console.log(!!null)
 console.log(!0)
@@ -115,11 +123,66 @@ console.log(!!"")
 console.log(!!0n)
 console.log(!![])
 console.log(!!{})
+console.log("Truthy == true")
+console.log("hello" == true)
+console.log({} == true)
+console.log([] == true)
 
 // practice
-console.log(true + false) // 1 + 0 = 1
-console.log(null + 1) // 0 + 1 = 1
+// console.log(true + false) // 1 + 0 = 1
+// console.log(null + 1) // 0 + 1 = 1
 
 // NaN
-console.log(0/0)
-console.log(2 * "Hello")
+// console.log(0/0)
+// console.log(2 * "Hello")
+
+// Undefined vs Null
+let x;
+console.log(x) // undefined
+
+function base(){
+    console.log('In a base')
+    // return 2;
+}
+
+function func(){
+    let value;
+    console.log(value)   // undefined
+    console.log(base())  // doesn't get returned value - undefined
+}
+func()
+
+let object = {}
+console.log(obj.property) // undefined
+
+let arr = []
+console.log(arr[2])  // undefined
+
+console.log(null == false)
+console.log(undefined == false)
+
+console.log('5' == 5,
+false == 0,     // true → false is coerced to number 0
+true == 1,        // true → true is coerced to number 1
+'' == 0,          // true → empty string is coerced to number 0
+null == false,
+undefined == false)
+
+// typeof
+// console.log('typeof and instanceof')
+// console.log(typeof function f(){})
+// console.log(f1 instanceof Function)
+// console.log(arr instanceof Array)
+// console.log(12 instanceof Number)
+// console.log("name" instanceof String)
+// console.log(true instanceof Boolean)
+// console.log(Symbol('a') instanceof Symbol)
+// console.log(10000000000000000000000n instanceof BigInt)
+
+if(document.all){
+    console.log('Hi')
+}else{
+    console.log('Hey')
+}
+
+console.log(Boolean({}))
