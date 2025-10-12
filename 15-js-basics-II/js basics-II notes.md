@@ -16,15 +16,25 @@ console.log(typeof a);  // number
 - With `functions`, both function name and body get hoisted.
 ```js
 // function hoisting with name and body
-// f1 = function() {
+// function f1(){
 //     return 2;
-// };
+// }
 
 console.log(f1())  // 2
 
 function f1(){
     return 2;
 }
+```
+
+```js
+// var b;
+function myFunc(){
+    console.log(b)  // prints 10
+}
+var b = 10; // b is being hoisted
+// b = 10; 
+myFunc()
 ```
 
 ### `Temporal Dead Zone`
@@ -61,7 +71,6 @@ console.log(a)  // undefined
 console.log(a * 4)  // NaN
 
 var a = 12;
-// a = 12
 ```
 - Added in window.
 
@@ -224,7 +233,7 @@ obj[newUid] = "009" // value can be changed
 newUid = Symbol('new description'); // creates new
 obj[newUid] = "description value"
 
-console.log(obj); // {uid: 1, name: 'Raj', rollNo: 24, Symbol(uid): '009', Symbol(secret key): 'secret'}
+console.log(obj); // {uid: 1, name: 'Raj', rollNo: 24, Symbol(uid): '009', Symbol(new description): "description value"}
 console.log(Object.keys(obj));  // ['uid', 'name', 'rollNo']
 ```
 
@@ -288,7 +297,7 @@ console.log(z, typeof z) // [] object
 // Implicit Coercion - If any of the operand is string and operator is '+' then Js will concatenate
 console.log("5" + 1);
 console.log(1 + "5");
-console.log("5" - 1); // here "5" will be converted into 5 cause operator '-' does only subtraction thing
+console.log("5" - 1); // here "5" will be converted into 5 because '-' operator does only subtraction thing
 
 console.log('5' == 5,
     false == 0,  // true → false is coerced to number 0
@@ -330,7 +339,7 @@ console.log(2 * "Hello")
 ```
 
 ## `Truthy vs Falsy Values`
-### 1. `Falsy values` - when used in comparision context
+### 1. `Falsy values` - when used in comparison context
 - O, -0, 0n, false, null, undefined, NaN, "", document.all
 
 ### 2. `Truthy values`
@@ -340,8 +349,8 @@ console.log(2 * "Hello")
 - Comparing falsy values with false doesn't mean they're same, they're only considered as false when used in boolean context like in `if` condition.
 ```js
 // falsy == false
-console.log(null == false)  // false
-console.log(undefined == false)  // false
+console.log(null == false)  // false - type coercion not possible
+console.log(undefined == false)  // false - type coercion not possible
 console.log([] == false) // true - type coercion
 console.log(-0 == false) // true - type coercison
 console.log("" == false) // true - type coercison
@@ -588,7 +597,88 @@ function impure(){
 impure()
 ```
 
-### 8. `Closures`
+### 8. `Lexical Scope`
+- It is the context in which variables and functions are accesssible.
+
+#### `Types`
+1. `Global Scope`
+- Variables declared outside the function, accessed everywhere in the code.
+
+2. `Local Scope`
+- Variables (var, let and const) written inside any function can be accessed in that function or block only.
+
+### 9. `Lexical Environment`
+- It is a mechanism to manage and access the variables based on the local scope.
+- It containes local memory variables plus lexical environment of its parent.
+- Whenever execution context is created so is lexical environment.
+- Execution context contains all local scope variables and functions plus reference to its parent lexical environment execution context.
+- The reference to the parent lexical environment is created during the Memory (Creation) phase of an Execution Context.
+
+```js
+function a(){
+    let b = 20
+    c()
+    function c(){
+        console.log(b)  // prints 20
+    }
+}
+
+a()
+```
+
+### BTS -
+``Global EC Memory``
+```
+a: {...}  // function references
+outer LE ref: null (No top-level)
+```
+
+``Function EC Memory - a()``
+```
+b: uninitialized
+c: {...} 
+outer LE ref: Global 
+```
+
+``Function EC Memory - c()``
+```
+(no local variables)
+outer LE ref: a()
+```
+
+``Global EC Code``
+```
+a()
+```
+
+``Function EC Code - a()``
+```
+b: 20
+c()
+```
+
+``Function EC Code - c()``
+```
+console.log(b)
+```
+
+![alt text](image-1.png)
+
+`Global` - 
+![alt text](image-2.png)
+
+`Parent Lexical Env - a()`
+![alt text](image-3.png)
+
+`Local - c()`
+![alt text](image-4.png)
+
+### 10. `Scope Chain`
+- Scope chain is chain of looking variables first in local current lexical environment and then moving to outer lexical environment until it founds or throws a ReferenceError.
+- For above eg.
+c() LE (tries to find b but doesn't get it) -> a() LE (tries to find b and gets it else would have gone to Global EC) -> Global -> null
+
+### 9. `Closures`
 - Function returning another function which uses variables of parent function.
 ```js
 // closure

@@ -138,10 +138,10 @@ console.log(z, typeof z)
 
 // Undefined vs Null
 let x;
-console.log(x) // undefined
+// console.log(x) // undefined
 
 function base() {
-    console.log('In a base')
+    // console.log('In a base')
     // return 2;
 }
 
@@ -153,20 +153,20 @@ function base() {
 // func()
 
 let object = {}
-console.log(obj.property) // undefined
+// console.log(obj.property) // undefined
 
 let arr = []
-console.log(arr[2])  // undefined
+// console.log(arr[2])  // undefined
 
-console.log(null == false)
-console.log(undefined == false)
+// console.log(null == false)
+// console.log(undefined == false)
 
-console.log('5' == 5,
-    false == 0,     // true → false is coerced to number 0
-    true == 1,        // true → true is coerced to number 1
-    '' == 0,          // true → empty string is coerced to number 0
-    null == false,
-    undefined == false)
+// console.log('5' == 5,
+//     false == 0,     // true → false is coerced to number 0
+//     true == 1,        // true → true is coerced to number 1
+//     '' == 0,          // true → empty string is coerced to number 0
+//     null == false,
+//     undefined == false)
 
 // typeof
 // console.log('typeof and instanceof')
@@ -212,13 +212,13 @@ if (-1) {
 let func = function () {
     console.log('Func called');
 }
-func();
+// func();
 
 // arrow functions
 let val1 = () => {
     console.log('Arrow function called');
 }
-val1();
+// val1();
 
 // let myFunction = (a, b) => a * b;
 // console.log(myFunction(2, 3));
@@ -252,7 +252,7 @@ const myObj = {
     class: 'X'
 }
 const {id, name, ...other} = myObj;
-console.log(other);  // {rollNo: 24, class: 'X'}
+// console.log(other);  // {rollNo: 24, class: 'X'}
 
 // first order functions
 function xyz(val){
@@ -272,7 +272,7 @@ function hof(){
     }
 }
 
-hof()();
+// hof()();
 
 // pure and impure functions
 let variable = 5;
@@ -281,12 +281,31 @@ let variable = 5;
 function pure(){
     console.log(variable)
 }
-pure()
+// pure()
 
 // impure function
 function impure(){
     variable++;
     console.log(variable)
 }
-impure()
+// impure()
+
+// Lexical Environment
+// console.log('Lexical Environment')
+// var b;
+// var c;
+function myFunc(){
+    // function myFunc2() {  // hoisted inside myFunc
+    //     console.log(b);   // b is found in the outer scope
+    // }
+
+    myFunc2()
+    function myFunc2(){  // myFunc2 will be hoisted
+        console.log(b)  // prints 10
+    }
+}
+var b = 10; // b is being hoisted
+// b = 10; 
+var c = 20;
+myFunc()
 
