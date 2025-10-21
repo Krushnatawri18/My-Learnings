@@ -340,7 +340,7 @@ console.log(2 * "Hello")
 
 ## `Truthy vs Falsy Values`
 ### 1. `Falsy values` - when used in comparison context
-- O, -0, 0n, false, null, undefined, NaN, "", document.all
+- 0, -0, 0n, false, null, undefined, NaN, "", document.all
 
 ### 2. `Truthy values`
 - [], {}, 12, 'name'
@@ -599,6 +599,8 @@ impure()
 
 ### 8. `Lexical Scope`
 - It is the context in which variables and functions are accesssible.
+- Uses the location where variable is declared within the source code to determine where that variable is available.
+- Nested functions have access to variables declared in their outer scope.
 
 #### `Types`
 1. `Global Scope`
@@ -679,15 +681,123 @@ console.log(b)
 c() LE (tries to find b but doesn't get it) -> a() LE (tries to find b and gets it else would have gone to Global EC) -> Global -> null
 
 ### 9. `Closures`
+- A closure is created when a function remembers the variables from its lexical scope, even after that outer function has finished executing so keeping variables alive of outer scope.
+
+- Simply, function bundled with its lexical scope.
+
+- When you write a function inside another function, like y inside x, and y uses variables from x, y forms a closure.
+
 - Function returning another function which uses variables of parent function.
+
+- Closure contains 
+1. the function itself
+2. lexical environment(scope) with all the variables from parent scopes that the function actually uses
+
+
 ```js
-// closure
-function parent(){
-    let closure = 10;
-    return function(){
-        console.log('closure', closure)
+// here closure is being created for y which contains function y and keeps a reference to variable from its outer scope (closed over name)
+function x(){
+    var name = "JavaScript"
+    function y(){
+        console.log(name)
     }
+    return y;
 }
-parent()();
+
+// closureY = function y + reference to its lexical scope (name = "JavaScript")
+const closureY = x()  
+closureY()  // "JavaScript"
 ```
 
+- Closure scope, here y is the function with the closure and closure includes the environment (x) which contains name.
+![alt text](image-6.png)
+
+### Note
+- If the inner function doesn’t use a variable from the outer scope, that variable is NOT part of the closure.
+
+- Closures can be nested.
+
+```js
+function x(){
+    // closure for y = y() + name
+    var name = "JavaScript"
+    var version = "ES6" // will not be contained in closure of y 'cause its never been used in function y
+    function y(){
+        // closure for z = z() + greeting + name
+        var greeting = "Hello"
+        function z(){
+            console.log(greeting+ " " + name);
+        }
+        return z;
+    }
+    return y;
+}
+
+const closureY = x();   // closureY => f y(){...body}
+const closureZ = closureY();  // closureZ = f z(){...body}
+closureZ();
+```
+
+```js
+function x(){
+    var name = "JavaScript"
+    function y(){
+        var version = "ES6"
+        console.log(name)
+        function z(){
+            console.log(name + " " + version)
+        }
+        z()
+    }
+    y()
+}
+
+x()
+```
+
+Here, closure of function z includes z() + closure of function y (y() + name)
+![alt text](image-7.png)
+
+- Closure captures the actual variable not its value means it just references to variable, doesn't freeze its value, instead it looks for live value.
+```js
+function x(){
+    var a = 7;
+    function y(){
+        console.log(a)  // 10
+    }
+    a = 10 // value of a will be updated to 10
+    y()
+}
+
+x()
+```
+
+- Closure works similar with let and const as it works with var just let and const have better scoping rules.
+```js
+// with let
+function x(){
+    if(true){
+        let a = 7;
+    }
+    function y(){
+        console.log(a) // reference error
+    }
+    y()
+}
+
+x()
+
+
+// with const
+function x(){
+    {
+        const a = 7;
+    }
+    function y(){
+        console.log(a) // reference error
+    }
+    y()
+}
+
+x()
+```
