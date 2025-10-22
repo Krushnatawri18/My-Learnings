@@ -39,24 +39,26 @@ function makeCounter() {
 const counter1 = makeCounter();
 const counter2 = makeCounter();
 
-console.log(counter1.value()); // 0
+// console.log(counter1.value()); // 0
 
 counter1.increment();
 counter1.increment();
-console.log(counter1.value()); // 2
+// console.log(counter1.value()); // 2
 
 counter1.decrement();
-console.log(counter1.value()); // 1
-console.log(counter2.value()); // 0
+// console.log(counter1.value()); // 1
+// console.log(counter2.value()); // 0
 
 // Eg. 3 - Closure scope chain
 // global scope
-const e = 10;
+// const e = 10;
 function sum(a) {
+    // closure 
     return function (b) {
-        return function (c) {
-            // outer functions scope
-            return function (d) {
+        // closure 
+        return function (c, d) {
+            // closure 
+            return function (e) {
                 // local scope
                 return a + b + c + d + e;
             };
@@ -64,4 +66,65 @@ function sum(a) {
     };
 }
 
-console.log(sum(1)(2)(3)(4)); // 20
+console.log(sum(1)(2)(3, 4)(5)); // 15
+
+
+// Eg. 4 - Closure with setTimeout
+function x() {
+    for (var i = 1; i <= 5; i++) {
+        // here IIFE creates a fresh copy of j
+        (function (j) {
+            // closure closed over j
+            setTimeout(function () {
+                // console.log(j);
+            }, j * 1000)
+        })(i)
+    }
+    // console.log("Closure with SetTimeout!")
+}
+
+x()
+
+const add = a => b => a + b;
+// console.log(add(5)(3));
+
+// Eg. 5 - Memoization with closure
+
+function slowSquare(n){
+    console.log('Calculating..')
+    return n * n;
+}
+
+function memoize(func){
+    const cache = {};
+
+    return function(arg){
+        if(arg in cache){
+            console.log('Calculated already!')
+            return cache[arg];
+        }
+
+        const result = func(arg);
+        cache[arg] = result;
+        return result;
+    }
+}
+
+const memoizeFunc = memoize(slowSquare);
+console.log(memoizeFunc(2));
+console.log(memoizeFunc(2));
+console.log(memoizeFunc(4));
+console.log(memoizeFunc(4));
+
+// Eg. 6 - Closure with memory management
+function startTimer() {
+  let counter = 0;
+  let unusedLargeData = new Array(1000000).fill("💾");
+
+  return function(time){
+    console.log(time + " "+ counter)
+  }
+}
+
+const newFunc = startTimer();
+newFunc(2);

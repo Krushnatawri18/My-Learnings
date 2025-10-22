@@ -801,3 +801,140 @@ function x(){
 
 x()
 ```
+
+- Use cases
+1. `Currying`
+- A technique in which a function takes multiple arguments and then transform into a sequence of funtions, each taking a single argument.
+```js
+const e = 10;
+function sum(a) {
+    // closure
+    return function (b) {
+        // closure
+        return function (c) {
+            // closure
+            return function (d) {
+                // local scope
+                return a + b + c + d + e;
+            };
+        };
+    };
+}
+
+console.log(sum(1)(2)(3)(4)); // 20
+
+// with arrow function
+const add = a => b => a + b;
+console.log(add(5)(3));
+```
+
+2. `Memoize`
+- An optimization technique that stores the results of expensive calculation avoiding calculating again if same inputs are provided.
+```js
+function slowSquare(n){
+    console.log('Calculating..')
+    return n * n;
+}
+
+function memoize(func){
+    const cache = {};
+
+    // function closed over cache
+    return function(arg){
+        if(arg in cache){
+            console.log('Calculated already!')
+            return cache[arg];
+        }
+
+        const result = func(arg);
+        cache[arg] = result;
+        return result;
+    }
+}
+
+const memoizeFunc = memoize(slowSquare);
+console.log(memoizeFunc(2));
+console.log(memoizeFunc(2));
+console.log(memoizeFunc(4));
+console.log(memoizeFunc(4));
+```
+
+### 10. `Closure with SetTimout (var and let)`
+```js
+function x() {
+    // here function inside setTimeout forms closure which references i not its value 
+    // so as loop finishes instantly now i has value as 6
+    for (var i = 1; i <= 5; i++) {
+        setTimeout(function () {
+            console.log(i); // and then will print 6 five times
+        }, i * 1000);
+    }
+    console.log("Closure with SetTimeout!")  // will run this first
+}
+
+x()
+```
+
+- var is function scoped (not block scoped) which shares i variable across all iterations of the loop.
+
+```js
+// solution with let
+function x() {
+    for (let i = 1; i <= 5; i++) {
+        setTimeout(function () {
+            console.log(i);
+        }, i * 1000);
+    }
+    console.log("Closure with SetTimeout!")  
+}
+
+x()
+```
+- let is block scoped which creates a new one each timeas its gets a new scope each time and closures capture that new i in each iteration.
+- BTS
+```js
+// Not actual syntax, but conceptually:
+for (let _i = 0; _i < 3; _i++) {
+  let i = _i; // create a new `i` for this iteration
+  // body uses this `i`
+}
+```
+
+```js
+// solution with var
+function x() {
+    for (var i = 1; i <= 5; i++) {
+        // function param j will create a new variable each time
+        function closedOver(j) {
+            // function below forms closure and closed over j
+            setTimeout(function () {
+                console.log(j);
+            }, j * 1000);
+        }
+        closedOver(i)
+    }
+    console.log("Closure with SetTimeout!")
+}
+
+x()
+```
+
+```js
+// solution with IIFE + var
+function x() {
+    for (var i = 1; i <= 5; i++) {
+        // here IIFE creates a fresh copy of j
+        // function closed over j
+        (function (j) {
+            setTimeout(function () {
+                console.log(j);
+            }, j * 1000)
+        })(i)
+    }
+    console.log("Closure with SetTimeout!")
+}
+
+x()
+```
+
+// Need to learn closures with this, closures in asynchronous code, 
