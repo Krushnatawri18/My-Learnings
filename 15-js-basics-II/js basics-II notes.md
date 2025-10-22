@@ -667,12 +667,15 @@ console.log(b)
 ![alt text](image-1.png)
 
 `Global` - 
+
 ![alt text](image-2.png)
 
 `Parent Lexical Env - a()`
+
 ![alt text](image-3.png)
 
 `Local - c()`
+
 ![alt text](image-4.png)
 
 ### 10. `Scope Chain`
@@ -713,7 +716,7 @@ closureY()  // "JavaScript"
 ![alt text](image-6.png)
 
 ### Note
-- If the inner function doesn’t use a variable from the outer scope, that variable is NOT part of the closure.
+- If the inner function doesn’t use a variable from the outer scope, that variable is not part of the closure.
 
 - Closures can be nested.
 
@@ -756,6 +759,7 @@ x()
 ```
 
 Here, closure of function z includes z() + closure of function y (y() + name)
+
 ![alt text](image-7.png)
 
 - Closure captures the actual variable not its value means it just references to variable, doesn't freeze its value, instead it looks for live value.
@@ -937,4 +941,4 @@ function x() {
 x()
 ```
 
-// Need to learn closures with this, closures in asynchronous code, 
+// Need to learn closures with this, closures in asynchronous code
