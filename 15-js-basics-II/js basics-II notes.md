@@ -13,7 +13,7 @@ console.log(typeof a);  // number
 - Moves declaration not initialization.
 - `var` variables are hoisted and initialized to undefined.
 - `let` and `const` are hoisted but reside in TDZ until its declaration made, preventing access before initialization.
-- With `functions`, both function name and body get hoisted.
+- With `functions`, both function name and body get hoisted if we didn't write function expression.
 ```js
 // function hoisting with name and body
 // function f1(){
@@ -24,6 +24,18 @@ console.log(f1())  // 2
 
 function f1(){
     return 2;
+}
+```
+
+```js
+pqr()
+
+function pqr(){
+    console.log('Hoisting with function statement')  // will work
+}
+
+var pqr = function (){
+    console.log('Hoisting with function expression')  // error: can't access pqr before initialization
 }
 ```
 
@@ -542,6 +554,12 @@ function xyz(val){
 xyz(function (){
     console.log('First order functions')
 })
+
+// treating function as value storing into a variable
+let ans = function sum(a, b){
+    return a + b;
+}
+ans(2, 6)
 ```
 ```js
 function shout(msg){
@@ -558,13 +576,13 @@ processing(shout)
 ### 6. `Higher Order Functions`
 - Functions that either returns another function or takes another function in parameter.
 ```js
-// Taking another function as parameter
+// Taking another function as parameter - xyz is hof
 function xyz(val){
     val();
 }   
 
 xyz(function (){
-    console.log('First order functions')
+    console.log('Higher order functions')
 })
 
 // Returning another function
@@ -597,7 +615,10 @@ function impure(){
 impure()
 ```
 
-### 8. `Lexical Scope`
+### 8. IIFE
+
+
+## `Lexical Scope`
 - It is the context in which variables and functions are accesssible.
 - Uses the location where variable is declared within the source code to determine where that variable is available.
 - Nested functions have access to variables declared in their outer scope.
@@ -609,7 +630,7 @@ impure()
 2. `Local Scope`
 - Variables (var, let and const) written inside any function can be accessed in that function or block only.
 
-### 9. `Lexical Environment`
+## `Lexical Environment`
 - It is a mechanism to manage and access the variables based on the local scope.
 - It containes local memory variables plus lexical environment of its parent.
 - Whenever execution context is created so is lexical environment.
@@ -678,12 +699,12 @@ console.log(b)
 
 ![alt text](image-4.png)
 
-### 10. `Scope Chain`
+## `Scope Chain`
 - Scope chain is chain of looking variables first in local current lexical environment and then moving to outer lexical environment until it founds or throws a ReferenceError.
 - For above eg.
 c() LE (tries to find b but doesn't get it) -> a() LE (tries to find b and gets it else would have gone to Global EC) -> Global -> null
 
-### 9. `Closures`
+## `Closures`
 - A closure is created when a function remembers the variables from its lexical scope, even after that outer function has finished executing so keeping variables alive of outer scope.
 
 - Simply, function bundled with its lexical scope.
@@ -863,7 +884,7 @@ console.log(memoizeFunc(4));
 console.log(memoizeFunc(4));
 ```
 
-### 10. `Closure with SetTimout (var and let)`
+### `Closure with SetTimout (var and let)`
 ```js
 function x() {
     // here function inside setTimeout forms closure which references i not its value 
@@ -942,3 +963,78 @@ x()
 ```
 
 // Need to learn closures with this, closures in asynchronous code
+
+## `IIFE`
+- Its a function that runs as soon as its defined.
+- Its one shot execution can't be reused. 
+```js
+// function expression
+(function() {
+  console.log("I am an IIFE!");
+})();
+
+// IIFE as arrow function
+(() => {
+    console.log('IIFE');
+})();
+
+// IIFE as async function
+(async function () {
+    console.log('IIFE');
+})();
+
+var result = (function (a, b){
+    return a + b;
+})(2, 3)
+console.log(result)
+
+// function statements/declaration doesn't work as IIFE
+function() {
+  console.log("I am an IIFE!");
+}();
+```
+
+- Use cases
+1. `Prevent global variable pollution - Private scope (Encapsulation)`
+2. `Safe scope for variables`
+3. `Works with closure`
+```js
+var counter = (function() {
+    // private variable - safe scope
+    var count = 0;
+
+    // IIFE returns an object with public methods
+    return {
+        // closure
+        increment: function() {
+            count++;
+        },
+        // closure
+        decrement: function() {
+            count--;
+        },
+        // closure
+        getCount: function() {
+            return count;
+        }
+    };
+})();
+
+counter.increment();
+counter.increment();
+counter.decrement();
+
+console.log(counter.getCount()); 
+
+// Trying to access the private count variable directly
+console.log(counter.count); // undefined (cannot access private variable)
+```
+- Run once and protect internals but normal functions can be created multiple times.
+- Can't create a new instance as its called immediately.
+
+```js
+// another variant of IIFE
+// + and ! forces js to treat function declaration as expression to run as IIFE
++function(){ console.log("hi") }(); // same as (function(){ console.log("hi") })();
+!function(){ console.log("bye") }(); // same as (function(){ console.log("bye") })();
+```

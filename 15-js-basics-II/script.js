@@ -239,11 +239,11 @@ let val1 = () => {
 // add(2)  // NaN
 
 // rest operator
-function abcd(...val){
+function abcd(...val) {
     console.log(val)  // [1, 2, 3, 4, 5, 6, 7]
 }
 
-abcd(1,2,3,4,5,6,7);
+abcd(1, 2, 3, 4, 5, 6, 7);
 
 const myObj = {
     id: 1,
@@ -251,22 +251,22 @@ const myObj = {
     rollNo: 24,
     class: 'X'
 }
-const {id, name, ...other} = myObj;
+const { id, name, ...other } = myObj;
 // console.log(other);  // {rollNo: 24, class: 'X'}
 
 // first order functions
-function xyz(val){
+function xyz(val) {
     val();
-}   
+}
 
-xyz(function (){
+xyz(function () {
     console.log('First order functions')
 })
 
 // higher order functions
-function hof(){
+function hof() {
     let closure = 10;
-    return function(){
+    return function () {
         console.log('Higher order functions')
         console.log('closure', closure)
     }
@@ -278,13 +278,13 @@ function hof(){
 let variable = 5;
 
 // pure function
-function pure(){
+function pure() {
     console.log(variable)
 }
 // pure()
 
 // impure function
-function impure(){
+function impure() {
     variable++;
     console.log(variable)
 }
@@ -294,18 +294,58 @@ function impure(){
 // console.log('Lexical Environment')
 // var b;
 // var c;
-function myFunc(){
+function myFunc() {
     // function myFunc2() {  // hoisted inside myFunc
     //     console.log(b);   // b is found in the outer scope
     // }
 
     myFunc2()
-    function myFunc2(){  // myFunc2 will be hoisted
+    function myFunc2() {  // myFunc2 will be hoisted
         console.log(b)  // prints 10
     }
 }
 var b = 10; // b is being hoisted
 // b = 10; 
 var c = 20;
-myFunc()
+// myFunc()
 
+/***** IIFE *****/
+// IIFE as async function
+(async function () {
+    console.log('IIFE');
+})();
+
+// IIFE as arrow function
+(() => {
+    console.log('IIFE');
+})();
+
+var result = (function (a, b){
+    return a + b;
+})(2, 3)
+// console.log(result)
+
+
+var counterValue = (function (){
+    var count = 0;
+    return {
+        increment: function(){
+            count++;
+        },
+        decrement: function(){
+            count--;
+        },
+        getCount: function(){
+            return count;
+        }
+    }
+})();
+
+counterValue.increment();
+counterValue.increment();
+counterValue.decrement();
+console.log(counterValue.getCount())
+
+// + and ! forces js to treat function declaration as expression to run as IIFE
++function(){ console.log("hi") }(); // BTS it does like (function(){ console.log("hi") })();
+!function(){ console.log("bye") }(); // BTS it does like (function(){ console.log("bye") })();
