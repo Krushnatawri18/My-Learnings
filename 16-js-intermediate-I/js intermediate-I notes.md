@@ -43,6 +43,10 @@ const newArray = array.map(function (val){
     return val;
 });
 console.log(newArray)
+
+// to replace value of an array
+const replaceArr = spreadArr.map((val) => val === 23 ? 22 : val)
+console.log(replaceArr)
 ```
 
 ### `Filter`

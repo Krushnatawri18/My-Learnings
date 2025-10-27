@@ -34,12 +34,18 @@ cars.unshift('nissan')
 // takes two params, 
 // 1. index - from where to start, 
 // 2. deleteCount - how many elements to delete from that index
+// 3. items - elements to add (optional)
 cars.splice(2, 3)
 // console.log(cars)
 
 // or
 // let newCars = cars.splice(2, 3)
 // console.log(newCars)
+
+// adding element with splice
+const colors = ['blue', 'yellow'];
+colors.splice(1, 0, 'red', 'green'); // removing 0 elements from index 1 and adding items
+console.log(colors)
 
 // 6. slice - returns a new array by copying elements of original array (doesn't change original one)
 // takes two params, 
@@ -143,3 +149,20 @@ const isOddNumbers = oddNumbers.every(function (val) {
     return val % 2 !== 0
 })
 console.log(isOddNumbers)
+
+// Destructuring
+const arr = [23, 48, 56, 78, 34]
+let [a, b, , , c] = arr;
+console.log(a, b, c) // 23, 48, 34
+
+const copyArr = arr;  // shares same references, so reflects change in arr if we do in copyArr, and vice-versa
+copyArr[0] = 22;
+console.log(arr)
+
+// so we do use
+// Spread operator
+const heterogenousArray = [1, 'keshav', {rollNo: 1}, [null, undefined], true, 1.246];
+const spreadArr = [...heterogenousArray];
+spreadArr[0] = 23;
+console.log(spreadArr)
+
