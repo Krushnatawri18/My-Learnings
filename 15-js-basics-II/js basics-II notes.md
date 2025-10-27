@@ -384,6 +384,21 @@ false == 0      // true (false → 0)
 null == undefined // true (special case)
 0 == ''         // true ('' → 0)
 '0' == false    // true ('0' → 0, false → 0)
+
+let string1 = "name";
+
+// will create String object - String {'name'}
+// 0: "n"
+// 1: "a"
+// 2: "m"
+// 3: "e"
+let string2 = new String('name');
+
+console.log(string1 == string2)
+console.log(string1 === string2)  // false
+
+console.log(typeof string1); // string
+console.log(typeof string2); // object
 ```
 - Exception `undefined == null` returns `true`.
 
@@ -1038,3 +1053,4 @@ console.log(counter.count); // undefined (cannot access private variable)
 +function(){ console.log("hi") }(); // same as (function(){ console.log("hi") })();
 !function(){ console.log("bye") }(); // same as (function(){ console.log("bye") })();
 ```
+
