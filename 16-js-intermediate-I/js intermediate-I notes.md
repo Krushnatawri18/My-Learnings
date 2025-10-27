@@ -1,0 +1,73 @@
+### ``JavaScript Intermediate``
+
+### `Arrays`
+- A heterogenous collection of elements which stores different data types like number, string, object, etc.
+```js
+const heterogenousArray = [1, 'keshav', {rollNo: 1}, [null, undefined], true, 1.246];
+console.log(heterogenousArray[2].rollNo, heterogenousArray[3][1])
+```
+
+## Note
+- Best practice is used to declare array with const. 
+```js
+const cars = ['mercedez', 'audi', 'bmw'];
+// cause you're trying to make cars point to new array in memory
+cars = ['rolls-royce', 'audi', 'bmw']; // error: assignment to constant variable (reassignment)
+cars[0] = 'rolls-royce' // allowed
+cars.push('mercedez') // allowed
+console.log(cars)
+```
+
+### `ForEach`
+- A method that executes a provided function once for each element in an array.
+```js
+const array = [8, 12, , 15, 10, 4, , 9];
+// copy of val will be created so manipulating val won't affect elements of an array
+array.forEach(function (val) {
+    val = val + 5
+})
+console.log('forEach', array)
+
+// will work as we have passed index
+array.forEach(function (val, index) {
+    array[index] = val + 5
+})
+```
+
+### `Map`
+- Returns a new array from calling a function for every array element.
+- Need to return else undefined will be returned.
+- Does not change the original array.
+```js
+const newArray = array.map(function (val){
+    return val;
+});
+console.log(newArray)
+```
+
+### `Filter`
+- Returns a new array containing elements which pass certain certain provided by function.
+- Skips empty slots.
+- Does not change the original array.
+```js
+const unfilteredArray = [8, 12, , 15, 10, 4, , 9]; // sparse array - empty slots
+const anotherArray = unfilteredArray.filter(function (val){
+    if(val < 10) return true;  // if true element will be put in anotherArray
+    return false;
+})
+
+// or
+const anotherArray = unfilteredArray.filter(val => val < 10)
+console.log(anotherArray) // [8, 4, 9]
+```
+
+### `Reduce`
+- Returns a single accumulated value from array elements.
+- Skips empty slots.
+- Does not change the original array.
+```js
+const sum = array.reduce(function (accumulator, val) {
+    return accumulator + val;
+}, 0)
+console.log(sum)
+```
