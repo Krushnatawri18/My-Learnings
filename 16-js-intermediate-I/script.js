@@ -161,7 +161,7 @@ console.log(arr)
 
 // so we do use
 // Spread operator
-const heterogenousArray = [1, 'keshav', {rollNo: 1}, [null, undefined], true, 1.246];
+const heterogenousArray = [1, 'keshav', { rollNo: 1 }, [null, undefined], true, 1.246];
 const spreadArr = [...heterogenousArray];
 spreadArr[0] = 23;
 console.log(spreadArr)
@@ -180,3 +180,83 @@ console.log(players.includes('Virat kohli')) // false, as it's case-sensitive
 // 2. start - starting position, default is 0, negative value starts searching from end of an array (optional)
 let index = players.indexOf('rohit sharma', -2);
 console.log(index)  // 4
+
+
+/***** Objects *****/
+const car = {
+    "name": "M4",
+    "brand": "BMW",
+    "color": "black",
+};
+
+let z = "name"
+
+console.log(car.z)  // undefined, as car doesn't have any key named 'z'
+console.log(car[z])  // M4, as it replaces z with 'name'
+
+// Computed properties 
+const role = 'Captain';
+
+// Destructuring 
+const user = {
+    "name": "Cristiano Ronaldo",
+    [role]: 'Cristiano Ronaldo',
+    goat: true,
+    address: {
+        city: 'Lisbon',
+        country: 'Portugal',
+        location: {
+            lat: 23.4,
+            lng: 79.6
+        }
+    }
+}
+
+let { lat, lng } = user.address.location;
+console.log(lat, lng)
+
+// for-in 
+for (let key in user) {
+    console.log(key, user[key])
+}
+
+// Object.keys - return an array of object keys as element
+console.log(Object.keys(user));
+
+// Object.values - return an array of object values as element
+console.log(Object.values(user));
+
+// Object.entries
+console.log(Object.entries(user));
+
+// Copying objects
+// 1. Spread operator - shallow copy
+let newUser = { ...user };
+user.address.location.lat = 23.8;
+console.log(user, newUser); // both will get updated as spread doesn't do deep copy
+
+// 2. Deep clone
+newUser = JSON.stringify(user)  // converts object into string like {"name":"Cristiano Ronaldo","address":{"city":"Lisbon","country":"Portugal","location":{"lat":23.8,"lng":79.6}}}
+
+// now to convert that actual valued string into object so no references only copy
+newUser = JSON.parse(newUser);
+
+newUser.address.location.lat = 23.4
+console.log(user, newUser); // now only newUser will be updated
+
+// 3. Object.assign
+// takes two params
+// 1. target - where to copy to
+// 2. source - from where to copy to
+let anotherUser = Object.assign({}, user);
+// console.log(anotherUser);
+
+// can also add own property and then put copied from source
+anotherUser = Object.assign({ goals: 950 }, user);
+// console.log(anotherUser)
+
+// Optional chaining
+// console.log(user.addresses.city); // error
+console.log(user?.addresses?.city) // undefined
+
+

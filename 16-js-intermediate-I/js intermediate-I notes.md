@@ -75,3 +75,31 @@ const sum = array.reduce(function (accumulator, val) {
 }, 0)
 console.log(sum)
 ```
+
+### `Objects`
+- A variable that holds many variables.
+- Collection of key-value pairs.
+```js
+const car = {
+    "name": "M4",
+    "brand": "BMW",
+    "color": "black"
+};
+
+let z = "name"
+
+console.log(car.name) // M4
+console.log(car['name'])  // M4
+
+console.log(car.z)  // undefined, as car doesn't have any key named 'z'
+console.log(car[z])  // M4, as it replaces z with 'name'
+```
+
+- Key can be boolean or number.
+```js
+const object = {
+    24: 'number',
+    true: 'boolean'
+}
+console.log(car[24], car[true]); // number boolean
+```
