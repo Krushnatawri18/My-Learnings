@@ -166,3 +166,17 @@ const spreadArr = [...heterogenousArray];
 spreadArr[0] = 23;
 console.log(spreadArr)
 
+// includes - return true if an array contains a particular value
+// takes two params
+// 1. element - value to search for
+// 2. start - starting position, default is 0 (optional)
+const players = ['sunil gavaskar', 'sachin tendulkar', 'ms dhoni', 'virat kohli', 'rohit sharma'];
+console.log(players.includes('virat kohli')) // true
+console.log(players.includes('Virat kohli')) // false, as it's case-sensitive
+
+// indexOf - returns the first index of particular value else -1 if not found
+// takes two params
+// 1. element - value to search for
+// 2. start - starting position, default is 0, negative value starts searching from end of an array (optional)
+let index = players.indexOf('rohit sharma', -2);
+console.log(index)  // 4
