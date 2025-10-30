@@ -207,13 +207,40 @@ const user = {
         country: 'Portugal',
         location: {
             lat: 23.4,
-            lng: 79.6
+            lng: 79.6,
+            direction: 'west'
         }
     }
 }
 
 let { lat, lng } = user.address.location;
 console.log(lat, lng)
+
+// remove property from object
+// delete user.address.location.direction;
+
+// to remove nested property from object
+function deleteNestedProperty(obj, path) {
+    // splits all keys by '.'
+    const keys = path.split('.');
+
+    // removes last key from keys array
+    const lastKey = keys.pop();
+
+    // as we have removed target/last key so it will return object from which we have to remove property if exist
+    // added optional chaining in case wrong path is given then we can't remove property
+    const targetObjectToRemoveFrom = keys.reduce((acc, key) => {
+        return acc?.[key]
+    }, obj);
+
+    // first check whether we got target object to search in and then checking whether lastKey is present in or not
+    if (targetObjectToRemoveFrom && lastKey in targetObjectToRemoveFrom) {
+        delete targetObjectToRemoveFrom[lastKey];
+    }
+}
+
+deleteNestedProperty(user, 'address.location.direction');
+console.log('removal of nested property', user)
 
 // for-in 
 for (let key in user) {
@@ -244,7 +271,7 @@ newUser = JSON.parse(newUser);
 newUser.address.location.lat = 23.4
 console.log(user, newUser); // now only newUser will be updated
 
-// 3. Object.assign
+// 3. Object.assign - shallow copy
 // takes two params
 // 1. target - where to copy to
 // 2. source - from where to copy to
@@ -255,8 +282,56 @@ let anotherUser = Object.assign({}, user);
 anotherUser = Object.assign({ goals: 950 }, user);
 // console.log(anotherUser)
 
+anotherUser.name = 'Mr. Football' // will update only anotherUser as its first level change
+anotherUser.address.country = 'Spain';  // will update both objects
+anotherUser.address.city = 'Madrid'; // will update both objects
+console.log(anotherUser)
+console.log(user)
+
+// Object.freeze - shallow copy
+const globe = {
+    "India": "New Delhi",
+    "USA": "New York",
+    "China": "Beijing",
+    "Europe": {
+        "UK": "London",
+        "France": "Paris"
+    }
+};
+
+Object.freeze(globe)
+globe["Russia"] = "Moscow";  // can't add new property, even it doesn't give any error
+globe["India"] = "Delhi";  // even can't change existing properties
+delete globe['China'];  // even can't remove existing properties 
+
+// as its shallow copy, you can delete nested object property
+delete globe.Europe.UK;
+// even can add new property in nested object
+globe.Europe.Spain = "Madrid";
+console.log(globe);
+console.log('typeof globe[key]', typeof globe['India'])
+
+// checks if object is frozen or not
+console.log(Object.isFrozen(globe)) // true
+console.log(Object.isFrozen(globe['Europe']))  // false as nested object isn't frozen
+
+// Deep freeze
+function deepFreeze(obj) {
+    Object.freeze(obj);
+
+    Object.keys(obj).forEach(key => {
+        if (typeof obj[key] === 'object' && obj[key] !== null && !Object.isFrozen(obj[key])) {
+            deepFreeze(obj[key]);
+        }
+    })
+    console.log('object in deepFreeze', obj);
+    return obj;
+}
+
+deepFreeze(globe);
+globe.Europe.Italy = "Rome"; // can't be added as deep frozen
+console.log(globe);
+
 // Optional chaining
 // console.log(user.addresses.city); // error
 console.log(user?.addresses?.city) // undefined
-
-

@@ -103,3 +103,24 @@ const object = {
 }
 console.log(car[24], car[true]); // number boolean
 ```
+
+#### `Object.freeze`
+- BTS - 
+```js
+// conceptual code
+class JSObject {
+    bool isExtensible;                   // Can we add new properties?
+    Map<PropertyKey, PropertyDescriptor> properties;  // All properties
+}
+
+struct PropertyDescriptor {
+    Value value;         // The value of the property
+    bool writable;       // Can we change the value?
+    bool configurable;   // Can we delete or redefine it?
+    bool enumerable;     // Can we see it or iterate in loops?
+}
+```
+
+- If we make object freeze, then it makes ``isExtensible = false``,
+for each property, ``writable = false``, ``configurable = false``, making it read-only at top level.
+- Prevents mutation whenever you try to write, delete or redefine a property, js engine checks the flags firs, if it says no then ignores or give error in strict mode.
