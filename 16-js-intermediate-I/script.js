@@ -200,6 +200,7 @@ const role = 'Captain';
 // Destructuring 
 const user = {
     "name": "Cristiano Ronaldo",
+    // dynamic keys using variable name
     [role]: 'Cristiano Ronaldo',
     goat: true,
     address: {
@@ -212,6 +213,19 @@ const user = {
         }
     }
 }
+
+user.championsLeagueCups = function () {
+    return 5;
+}
+// user.ballon_dors = g 
+console.log(user); // return all keys with championsLeagueCups: f() (not value)
+
+// so, do this
+function getBallonDors() {
+    return 5;
+}
+user.ballon_dors = getBallonDors();
+console.log(user); // return all keys with value
 
 let { lat, lng } = user.address.location;
 console.log(lat, lng)
@@ -253,14 +267,20 @@ console.log(Object.keys(user));
 // Object.values - return an array of object values as element
 console.log(Object.values(user));
 
-// Object.entries
-console.log(Object.entries(user));
+const course = {
+    title: 'JavaScript',
+    duration: '2 months'
+}
+// Object.entries - return an array of the key/value pairs of object
+Object.entries(course).forEach((val) => {
+    console.log(val[0] + " : " + val[1]);
+})
 
 // Copying objects
 // 1. Spread operator - shallow copy
 let newUser = { ...user };
 user.address.location.lat = 23.8;
-console.log(user, newUser); // both will get updated as spread doesn't do deep copy
+console.log(user, newUser); // both will get updated as spread doesn't do deep copy or nested object passed as reference not copy 
 
 // 2. Deep clone
 newUser = JSON.stringify(user)  // converts object into string like {"name":"Cristiano Ronaldo","address":{"city":"Lisbon","country":"Portugal","location":{"lat":23.8,"lng":79.6}}}
@@ -332,6 +352,164 @@ deepFreeze(globe);
 globe.Europe.Italy = "Rome"; // can't be added as deep frozen
 console.log(globe);
 
+// Object.defineProperty - 
+// helps to define special properties with specific rules
+// to make properties read-only, hidden
+const object = {
+    "programmingLanguage": 'Python'
+}
+
+// takes 3 params
+// 1. object - the object to modify
+// 2. propertyName - property to add or modify
+// 3. descriptor - describing how that property will behave
+// all these rules will be applied on particular property - 'webdev'
+Object.defineProperty(object, 'webdev', {
+    value: 'JavaScript',
+    writable: true, // can change
+    enumerable: false,  // can't iterate in loops, in JSON.stringify and with Object.keys(), Object.values(), Object.entries()
+    configurable: false // can't be deleted or redefine this property with another value
+});
+
+// 1. configurable - can't change this flag to true again if its false and vice-versa
+// will change value if writable is true even though configurable not - its not redefining its changing values
+object['webdev'] = 'React';
+delete object.webdev; // deletion - no effect
+
+// redefining won't be allowed even if writable is true
+// Object.defineProperty(object, 'webdev', { value: 'React' });  // error: cannot redefine the property
+// Object.defineProperty(object, 'webdev', { configurable: true });  // error: cannot redefine the property
+// Object.defineProperty(object, 'webdev', { enumerable: true });  // error: cannot redefine the property
+// Object.defineProperty(object, 'webdev', { writable: false });  // error: cannot redefine the property
+
+console.log(object);
+
+// 2. enumerable
+// will not print anything related to 'webdev' as its not enumerable
+console.log(Object.keys(object));
+console.log(Object.values(object));
+console.log(Object.entries(object));
+console.log(JSON.stringify(object));
+
+for (let key in object) {
+    console.log(key, object[key])
+}
+
+// for multiple properties
+const companies = {};
+
+function valueForMicrosoft(){
+    return 'US';
+}
+
+Object.defineProperties(companies, {
+    TCS: {
+        value: 'India',
+        writable: true,
+        enumerable: false,
+        configurable: false
+    },
+    Accenture: {
+        value: 'Ireland',
+        writable: false,
+        enumerable: true,
+        configurable: true
+    },
+    Microsoft: {
+        value: valueForMicrosoft(),
+        writable: true,
+        enumerable: false,
+        configurable: false
+    }
+});
+
+console.log(companies);
+
+// Object.seal() 
+const obj = {
+    name: 'Alice',
+    age: 24
+};
+Object.seal(obj);
+obj.age = 26;  // can change value of existing property
+delete age;  // can't delete existing property, even doesn't give any error
+obj['gender'] = 'Female';  // can't add new property
+console.log(obj, Object.isSealed(obj));
+
+// main difference between freeze and seal
+// freeze = seal + writable: false (can't modify existing values)
+
 // Optional chaining
-// console.log(user.addresses.city); // error
+console.log(user.addresses) // undefined 
+// console.log(user.addresses.city); // error - when something in middle is null or undefined
 console.log(user?.addresses?.city) // undefined
+
+const person = {
+    'first-name': 'Ajay',
+    'last-name1': 'Chavan'
+};
+
+// Js doesn't treat first-name or last-name1 as single property, actually its not valid identifier as it contains '-'
+// '-' means subtraction, so Js tries to convert both things to number, (person.first) -> undefined -> NaN
+// (name) -> "" -> 0
+// NaN - 0 = NaN
+console.log(person.first - name); // NaN
+// console.log(person.last-name1); // error: name1 is not defined 
+
+// destructuing with aliasing
+const { 'first-name': firstName } = person;
+console.log(firstName);
+
+// Object comparison
+const obj1 = { a: 2, b: 1 };
+const obj2 = { a: 2, b: 1 };
+console.log(obj1 === obj2);  // false - as both have separate memory
+
+// to compare objects by value
+console.log(JSON.stringify(obj1) === JSON.stringify(obj2)); // true
+
+const obj4 = { b: 1, a: 2 }
+console.log(JSON.stringify(obj1) === JSON.stringify(obj4)); // false - as order matters
+
+const obj3 = obj1;
+console.log(obj1 === obj3);  // true - as both pointing to same memory
+
+// shallow comparison
+function shallowCompare(obj1, obj2) {
+    const keys1 = Object.keys(obj1);
+    const keys2 = Object.keys(obj2);
+
+    if (keys1.length !== keys2.length) return false;
+
+    // case-sensitive checking 
+    for (let i = 0; i < keys1.length; i++) {
+        if (keys1[i] !== keys2[i] || obj1[keys1[i]] !== obj2[keys2[i]]) return false;
+    }
+    return true;
+}
+
+console.log(shallowCompare(obj1, obj4));
+
+// deep comparison
+function deepCompare(obj1, obj2) {
+    if (obj1 === obj2) return true;
+
+    if (typeof obj1 !== 'object' || typeof obj2 !== 'object' || obj1 === null || obj2 === null) return false;
+
+    const keys1 = Object.keys(obj1);
+    const keys2 = Object.keys(obj2);
+
+    if (keys1.length !== keys2.length) return false;
+
+    // takes particular key like name from keys1 then checks in keys2 if present then pass for deepcompare
+    // order doesn't matter here
+    for (let key of keys1) {
+        if (!keys2.includes(key) || !deepCompare(obj1[key], obj2[key])) return false;
+    }
+    return true;
+}
+
+const object1 = { name: 'Alice', address: { city: 'NY' }, obj: {} };
+const object2 = { address: { city: 'NY' }, name: 'Alice', obj: {} };
+console.log(deepCompare(object1, object2));  // true
+

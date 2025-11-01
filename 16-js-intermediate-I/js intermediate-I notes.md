@@ -124,3 +124,5 @@ struct PropertyDescriptor {
 - If we make object freeze, then it makes ``isExtensible = false``,
 for each property, ``writable = false``, ``configurable = false``, making it read-only at top level.
 - Prevents mutation whenever you try to write, delete or redefine a property, js engine checks the flags firs, if it says no then ignores or give error in strict mode.
+
+// Need to learn Object.create with prototype and Object.hasOwn with prototype
