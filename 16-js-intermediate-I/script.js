@@ -92,11 +92,6 @@ fruits.sort((a, b) => a.localeCompare(b))  // ascending order
 fruits.sort((a, b) => b.localeCompare(a))  // descending order
 // console.log(fruits)
 
-// forEach
-fruits.forEach(function (val) {
-    console.log("fruit " + val)
-})
-
 array.forEach(function (val) {
     val = val + 5
 })
@@ -256,9 +251,52 @@ function deleteNestedProperty(obj, path) {
 deleteNestedProperty(user, 'address.location.direction');
 console.log('removal of nested property', user)
 
-// for-in 
+// Arrays are objects only
+console.log(typeof []);  // object
+console.log([] instanceof Array); // true
+console.log([] instanceof Object); // true cause array extends object
+
+// for-in - works with keys
+// works with objects to iterate over keys of object
+// break and continue works with for-in
 for (let key in user) {
     console.log(key, user[key])
+}
+
+const values = [93, 'hello', true, null, undefined];
+values.name = "numbers";
+values[9] = "nine";
+values[12] = {}
+console.log(values, values.length);
+
+// Issues using for-in with arrays
+// 1. Indefinite behavior
+// skips missing index elements
+// include extra properties like name
+// can give unpredictable order in some JS engines like name, '0', '1', ... 
+for (let value in values) {
+    console.log(values[value]); // prints 93, hello, true, null, undefined, nine, {}, numbers
+}
+
+// doesn't skip missing index elements
+// iterate over iterable values not object properties
+for (let value of values) {
+    console.log(value)  // prints 93, hello, true, null,undefined, undefined, undefined, undefined, undefined, nine, undefined, undefined, {}
+}
+
+// 2. Can break loops
+// here adding extra properties break loops that expect only numbers
+// here value is key as string - '0', '1', ...
+for (let value in values) {
+    console.log(value * 2); // [0, 2, 4, 6, 8, NaN]
+}
+
+// works with string
+const str = 'hello'
+for (let char in str) {
+    if (char === '0')
+        continue;
+    console.log(char, str[char])
 }
 
 // Object.keys - return an array of object keys as element
@@ -274,6 +312,97 @@ const course = {
 // Object.entries - return an array of the key/value pairs of object
 Object.entries(course).forEach((val) => {
     console.log(val[0] + " : " + val[1]);
+})
+
+// for-of - works with values
+// break and continue works with for-of
+for (let value of arr) {
+    console.log(value) // prints value not index
+}
+
+const iterator = arr.entries()  // returns an object which produces [index, value] while you are iterating it
+console.log(iterator.next()) // { value: [0,22], done: false}
+console.log(iterator.next()) // { value: [1,48], done: false}
+console.log(iterator.next()) // { value: [3,56], done: false}
+console.log(iterator.next()) // { value: [4,78], done: false}
+console.log(iterator.next()) // { value: [5,34], done: true}
+
+// with arrays using arr.entries cause arr is not iterable and you're trying to destructure index and values from it 
+for (let [index, value] of arr.entries()) {
+    console.log(index, value)
+}
+
+// doesn't skip indexing elements 
+// but skips the object properties like 'name'
+for (let [index, value] of values.entries()){
+    console.log(index, value)
+}
+
+// with objects using Object.entries or Object.values not works directly with course
+let count = 0;
+for (let [key, value] of Object.entries(course)) {
+    if(count === 1) break;
+    else console.log(key, value)
+    count++;
+}
+
+for (let value of Object.values(course)) {
+    console.log(value)
+}
+
+// with string
+for (let char of "Hello") {
+    console.log(char)
+}
+
+// works with set
+const set = new Set([1, 2, 2, 3]);
+for (let value of set) {
+    console.log(value)
+}
+
+// works with map
+const map = new Map([['name', 'alice'], ['age', 24]]);
+for (let [key, value] of map){
+    console.log(key, value)
+}
+
+// forEach - a function which tells for each element in this array do this action
+// iterate over each array element and executes callback function for each element 
+// always returns undefined (nothing) or does not create any new array, just executes callback on each element
+// doesn't work with break and continue as they work with loops but forEach is a function which takes a callback so it won't allow them
+fruits.forEach(function (val) {
+    console.log("fruit " + val)
+})
+
+// follows order value, index, array_name
+fruits.forEach((value, index, fruits) => {
+    console.log(index, value);
+})
+
+// with objects directly forEach doesn't as its not array so not iterable
+// course.forEach((value) => {
+//     console.log(value) // error: course.forEach is not a function
+// })
+
+// works
+Object.keys(course).forEach((value) => {
+    console.log(value)
+})
+
+// works
+Object.values(course).forEach((value) => {
+    console.log(value)
+})
+
+// works
+Object.entries(course).forEach((value) => {
+    console.log(value[0] + " " + value[1])
+})
+
+// skips missing index elements 
+values.forEach((value) => {
+    console.log(value)
 })
 
 // Copying objects
@@ -386,10 +515,10 @@ console.log(object);
 
 // 2. enumerable
 // will not print anything related to 'webdev' as its not enumerable
-console.log(Object.keys(object));
-console.log(Object.values(object));
-console.log(Object.entries(object));
-console.log(JSON.stringify(object));
+// console.log(Object.keys(object));
+// console.log(Object.values(object));
+// console.log(Object.entries(object));
+// console.log(JSON.stringify(object));
 
 for (let key in object) {
     console.log(key, object[key])
@@ -398,7 +527,7 @@ for (let key in object) {
 // for multiple properties
 const companies = {};
 
-function valueForMicrosoft(){
+function valueForMicrosoft() {
     return 'US';
 }
 

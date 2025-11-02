@@ -6,6 +6,16 @@
 const heterogenousArray = [1, 'keshav', {rollNo: 1}, [null, undefined], true, 1.246];
 console.log(heterogenousArray[2].rollNo, heterogenousArray[3][1])
 ```
+- Arrays are objects under the hood.
+```js
+const arr = [23, 56, 78];
+// the keys '0', '1', '2' are actually string keys and length is a special property that get updated whenever you add or remove elements.
+// BTS - const arr = {0 : 23, 1 : 56, 2 : 78, length: 3}
+
+console.log(typeof []);  // object
+console.log([] instanceof Array); // true
+console.log([] instanceof Object); // true (because Array extends Object)
+```
 
 ## Note
 - Best practice is used to declare array with const. 
