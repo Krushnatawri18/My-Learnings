@@ -60,7 +60,7 @@ console.log(replaceArr)
 ```
 
 ### `Filter`
-- Returns a new array containing elements which pass certain certain provided by function.
+- Returns a new array containing elements which pass certain criteria provided by function.
 - Skips empty slots.
 - Does not change the original array.
 ```js
