@@ -412,6 +412,30 @@ true === 1      // false (boolean !== number)
 null === undefined // false
 ```
 
+### `Note`
+- For all reference (non-primitive) data type, both `==` and `===` works the same they don't check the actual content but instead they check whether both variables referene to same object in memory.
+```js
+let array1 = [12, 34, 58, 74, 96];
+let array2 = new Array(12, 34, 58, 74, 96)
+let array3 = [12, 34, 58, 74, 96];
+// console.log(array1, array2)
+
+console.log(array1 == array2)  // false - both are different objects
+console.log(array1 === array2)  // false - both doesn't point to same memory location
+console.log(array1 == array3)  // false - both are different objects
+console.log(array1 === array3)  // false - both doesn't point to same memory location
+
+let obj1 = {a : 1, b : 2};
+let obj2 = {a : 1, b : 2};
+console.log(obj1 == obj2)  // false
+console.log(obj1 === obj2)  // false
+
+function f1(){ return 2; }
+function f2(){ return 2; }
+console.log(f1 == f2)  // false
+console.log(f1 === f2)  // false
+```
+
 ## `Undefined vs Null`
 ### 1. `Undefined`
 - Automatically assigned by Js when
