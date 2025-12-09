@@ -196,3 +196,143 @@ function Panel({
 - Then pass the information down through props from their common parent.
 - Finally, pass the event handlers down so that the children can change the parent’s state.
 - It’s useful to consider components as “controlled” (driven by props) or “uncontrolled” (driven by state).
+
+### Passing data from child to parent
+
+1. Prop functions
+- Used to pass data from child to parent with callback functions.
+- eg.
+```javascript
+import { useState } from 'react'
+import Child from './components/Child'
+import './App.css'
+
+function App() {
+  const [name, setName] = useState('Alexandar')
+
+  const handleClick = (value) => {
+    setName(value);
+  }
+
+  return (
+    <>
+      <div>
+        <h2>Sending data to parent from child with prop functions</h2>
+      </div>
+      <Child sendDataToGrandParent={handleClick}/>
+      <div>
+        <p>Parent component value : {name}</p>
+      </div>
+    </>
+  )
+}
+
+export default App
+
+import { useState } from "react";
+import GrandChild from "./GrandChild";
+
+const Child = (props) => {
+    return (
+        <>
+            <h2>Sending data to parent from grand child</h2>
+            <GrandChild sendDataToParent={props.sendDataToGrandParent} />
+        </>
+    )
+}
+
+export default Child
+
+import React from 'react'
+
+const GrandChild = (props) => {
+    const data = "Krushna";
+    return (
+    <button onClick={() => props.sendDataToParent(data)}>
+        Send data to grand parent
+    </button>
+  )
+}
+
+export default GrandChild
+```
+
+2. Context Api
+- eg.
+```javascript
+import { createContext, useState } from 'react'
+import './App.css'
+import ChildA from './components/ChildA';
+
+const UserContext = createContext();
+
+function App() {
+  const [user, setUser] = useState({
+    id: 1,
+    name: 'User'
+  });
+
+
+  return (
+    <>
+      <UserContext.Provider value={{user, setUser}}>
+          <div id='container'>
+            <ChildA />
+          </div>
+      </UserContext.Provider>
+    </>
+  )
+}
+
+export default App
+export { UserContext }
+
+import ChildB from './ChildB'
+
+const ChildA = () => {
+    console.log('ChildA rendered');
+    return (
+        <div>
+            <ChildB />
+        </div>
+    )
+}
+
+export default ChildA
+
+import ChildC from './ChildC'
+
+const ChildB = () => {
+    console.log('ChildB rendered');
+    return (
+        <div>
+            <ChildC />
+        </div>
+    )
+}
+
+export default ChildB
+
+import React, { useContext } from 'react'
+import { UserContext } from '../App'
+
+const ChildC = React.memo(() => {
+    console.log('ChildC rendered');
+    const value = "Krushna";
+    const { user, setUser } = useContext(UserContext);
+
+    return (
+        <div>
+            <p>Hello from {user.name} !</p>
+            <div>
+                <button onClick={() => setUser({name: value})}>Send data to Parent</button>
+            </div>
+        </div>
+    )
+});
+
+export default ChildC
+```
+
+3. Redux
+- 

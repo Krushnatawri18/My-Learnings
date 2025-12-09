@@ -17,11 +17,11 @@ function App() {
 
   return (
     <>
-      <div>
+      <div disabled title='UseMemo'>
         <h2>UseMemo</h2>
       </div>
       <br />
-      <button onClick={() => setCount(count + 1)}>
+      <button title='Increment' disabled={true} onClick={() => setCount(count + 1)}>
         Increment
       </button>
       <br /><br />

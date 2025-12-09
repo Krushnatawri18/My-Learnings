@@ -197,3 +197,13 @@ const handleSubmit = useMemo(() => {
     };
 }, [productId, referrer]);
 ```
+
+### Difference between memo and useMemo
+
+1. memo
+- Used to memoize the component.
+- Component-level.
+
+2. useMemo
+- Used to memoize a expensive functions.
+- Inside functional components.

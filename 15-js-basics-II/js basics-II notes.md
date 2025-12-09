@@ -35,6 +35,11 @@ function pqr(){
 }
 
 var pqr = function (){
+    console.log('Hoisting with function expression')  // var hoisted as undefined so calling undefined() will give error: pqr is not a function
+}
+
+// same result for const as let
+let pqr = function (){
     console.log('Hoisting with function expression')  // error: can't access pqr before initialization
 }
 ```
@@ -73,7 +78,7 @@ function f1(){
 }
 
 f1();
-console.log(a) // can't access a
+console.log(a) // can't access a - a is not defined
 ```
 - Temporal Dead Zone
 ```js
@@ -413,7 +418,7 @@ null === undefined // false
 ```
 
 ### `Note`
-- For all reference (non-primitive) data type, both `==` and `===` works the same they don't check the actual content but instead they check whether both variables referene to same object in memory.
+- For all reference (non-primitive) data type, both `==` and `===` works the same they don't check the actual content but instead they check whether both variables reference to same object in memory.
 ```js
 let array1 = [12, 34, 58, 74, 96];
 let array2 = new Array(12, 34, 58, 74, 96)
@@ -477,7 +482,7 @@ console.log(obj.property); // null
 
 ### `Note`
 - `typeof []` returns `object`.
-- `typeof function f(){}` returns 'function`.
+- `typeof function f(){}` returns `function`.
 - To find real type of any array or function we use `instanceof`.
 - `instanceof` only works with `reference` type not with `primitive` type.
 ```js
@@ -527,7 +532,7 @@ console.log(myFunction(2, 3));
 let hello = () => "Hello World!";
 console.log(hello())
 
-let val1 = () =>{
+let val1 = () => {
     console.log('Arrow function called');
 }     
 val1();
@@ -538,7 +543,7 @@ let f2 = (x, y) => { x * y } ;  // considers {} as function body, not an express
 console.log(f2(2, 4))  // undefined
 
 // will not work
-let f3 = (x, y) => return x * y ;  // return will not work w/o curly braces
+let f3 = (x, y) => return x * y ;  // error: return will not work w/o curly braces
 
 // right code as we're explicitly returning value
 let f3 = (x, y) => { return x * y };  // or x * y will also work
@@ -654,9 +659,6 @@ function impure(){
 impure()
 ```
 
-### 8. IIFE
-
-
 ## `Lexical Scope`
 - It is the context in which variables and functions are accesssible.
 - Uses the location where variable is declared within the source code to determine where that variable is available.
@@ -755,7 +757,6 @@ c() LE (tries to find b but doesn't get it) -> a() LE (tries to find b and gets 
 - Closure contains 
 1. the function itself
 2. lexical environment(scope) with all the variables from parent scopes that the function actually uses
-
 
 ```js
 // here closure is being created for y which contains function y and keeps a reference to variable from its outer scope (closed over name)
@@ -868,7 +869,7 @@ x()
 
 - Use cases
 1. `Currying`
-- A technique in which a function takes multiple arguments and then transform into a sequence of funtions, each taking a single argument.
+- A technique in which a function takes multiple arguments and then transform into a sequence of functions, each taking a single argument.
 ```js
 const e = 10;
 function sum(a) {
@@ -954,7 +955,7 @@ function x() {
 
 x()
 ```
-- let is block scoped which creates a new one each timeas its gets a new scope each time and closures capture that new i in each iteration.
+- let is block scoped which creates a new one each time as its gets a new scope each time and closures capture that new i in each iteration.
 - BTS
 ```js
 // Not actual syntax, but conceptually:
@@ -1003,7 +1004,7 @@ x()
 
 // Need to learn closures with this, closures in asynchronous code
 
-## `IIFE`
+### 8. `IIFE`
 - Its a function that runs as soon as its defined.
 - Its one shot execution can't be reused. 
 ```js
@@ -1077,4 +1078,3 @@ console.log(counter.count); // undefined (cannot access private variable)
 +function(){ console.log("hi") }(); // same as (function(){ console.log("hi") })();
 !function(){ console.log("bye") }(); // same as (function(){ console.log("bye") })();
 ```
-
