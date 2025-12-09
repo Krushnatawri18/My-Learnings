@@ -1,12 +1,44 @@
-# React + Vite
+DAY 01 - React key in .map() (List Rendering)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This day is about understanding why we use a key when rendering lists with .map() in React.
 
-Currently, two official plugins are available:
+🔑 What is key?
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+In React, a key is a special prop you give to each item in a list to help React identify which items changed, were added, or removed.
 
-## Expanding the ESLint configuration
+🧠 Why It Matters
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+React uses the key to:  
+
+🚀 Make list updates faster and smarter
+
+🔄 Avoid unnecessary re-renders
+
+✅ Keep track of items when the list changes
+
+🧩 Example
+
+```
+const users = ['Alice', 'Bob', 'Charlie'];
+
+return (
+  <ul>
+    {users.map((user, index) => (
+      <li key={user}>{user}</li>
+    ))}
+  </ul>
+);
+```
+
+✅ Good key: something unique and stable, like an ID or name
+
+❌ Avoid using just the array index as a key unless the list never changes
+
+⚠️ Common Mistakes
+
+❌ Using index as a key in dynamic lists
+
+❌ Not adding a key at all (React will warn you)
+
+❌ Using a value that isn't unique
+
