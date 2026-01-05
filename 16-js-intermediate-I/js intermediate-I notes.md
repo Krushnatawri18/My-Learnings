@@ -44,6 +44,40 @@ array.forEach(function (val, index) {
 })
 ```
 
+### `ForEach with await`
+- ForEach calls the callback synchronously and it ignores like it doesn't wait for the promises.
+- ForEach waits for the callback to be called but not for it to finish.
+- Means, async function does wait for promise but forEach doesn't.
+- So when the callback reaches await, it suspends that callback, returns a promise, and forEach immediately moves on to the next array item.
+
+```js
+// Call this async function for each element and ignore the promise it returns.
+async function run() {
+  [1, 2, 3].forEach(async (n) => {
+    await new Promise(r => setTimeout(r, 1000));
+    console.log(n);
+  });
+
+  console.log("done");
+}
+
+run();  // prints done first and then all element values of array
+
+// solution
+async function run1() {
+  for (const n of [1, 2, 3]) {
+    await new Promise(r => setTimeout(r, 1000));
+    console.log(n);
+  }
+
+  console.log("done");
+}
+
+run1()  // prints all values of array and then done
+```
+
+// need to learn about Promise.all when learning async/await
+
 ### `Map`
 - Returns a new array from calling a function for every array element.
 - Need to return else undefined will be returned.
@@ -133,6 +167,6 @@ struct PropertyDescriptor {
 
 - If we make object freeze, then it makes ``isExtensible = false``,
 for each property, ``writable = false``, ``configurable = false``, making it read-only at top level.
-- Prevents mutation whenever you try to write, delete or redefine a property, js engine checks the flags firs, if it says no then ignores or give error in strict mode.
+- Prevents mutation whenever you try to write, delete or redefine a property, js engine checks the flags first, if it says no then ignores or give error in strict mode.
 
 // Need to learn Object.create with prototype and Object.hasOwn with prototype

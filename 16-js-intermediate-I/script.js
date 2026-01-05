@@ -157,11 +157,21 @@ copyArr[0] = 22;
 // console.log(arr)
 
 // so we do use
-// Spread operator
+// Spread operator - shallow copy
 const heterogenousArray = [1, 'keshav', { rollNo: 1 }, [null, undefined], true, 1.246];
 const spreadArr = [...heterogenousArray];
 spreadArr[0] = 23;
 // console.log(spreadArr)
+
+// 1. Shallow copy with primitive value 
+const arr1 = [34, 26, 48, 62, {x: 86}]
+const arr2 = [...arr1];
+arr2[1] = 20; 
+console.log(arr1, arr2) // doesn't change original array arr1
+
+// 2. Shallow copy with non-primitive value 
+arr2[4].x = 92;
+console.log(arr1, arr2) // does change both arrays
 
 // 15. includes - return true if an array contains a particular value
 // takes two params
@@ -198,7 +208,7 @@ const role = 'Captain';
 const user = {
     "name": "Cristiano Ronaldo",
     // dynamic keys using variable name
-    [role]: 'Cristiano Ronaldo',
+    role: 'Cristiano Ronaldo',
     goat: true,
     address: {
         city: 'Lisbon',
@@ -386,6 +396,33 @@ fruits.forEach((value, index, fruits) => {
 // course.forEach((value) => {
 //     // console.log(value) // error: course.forEach is not a function
 // })
+
+// forEach with async/await
+const Arr = [76,43,53,24,64,86]
+async function run() {
+    Arr.forEach(async (n) => {
+        await new Promise(r => setTimeout(r, 1000));
+        console.log(n)
+    });
+
+    console.log('Done')
+}
+
+// prints Done first then all Arr values
+run()
+
+// solution
+async function run1() {
+  for (const n of [1, 2, 3]) {
+    await new Promise(r => setTimeout(r, 1000));
+    console.log(n);
+  }
+
+  console.log("done");
+}
+
+// prints all values of array and then done
+run1()  
 
 // works
 Object.keys(course).forEach((value) => {
