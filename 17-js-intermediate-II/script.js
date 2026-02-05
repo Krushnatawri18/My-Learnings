@@ -22,6 +22,12 @@ element.innerText = "Topic Manipulation with innerText"
 
 element.innerHTML = "<i>Topic Manipulation with innerHTML by adding new html tag</>"
 
+let val1 = document.getElementById('box').textContent;
+console.log(val1);
+
+let val2 = document.getElementById('box').innerText;
+console.log(val2)
+
 // 3. Attribute manipulation
 let a = document.querySelector('a');
 a.href = "https://www.google.com";
@@ -49,8 +55,9 @@ btn.removeAttribute('disabled')
 // createElement
 let h1 = document.createElement('h1');
 console.log(h1) // prints blank h1
-h1.textContent = "Hello World !";  // adding text content
+h1.textContent = "Hello my world !";  // adding text content
 document.body.append(h1); // appending h1 element at the end in body, even after script tag
+// document.querySelector('body).append(h1)
 
 // document.body.prepend(h1);  // adding h1 element at the start in body
 
@@ -68,7 +75,7 @@ document.body.querySelector('div').removeChild(h2);
 
 // 5. Style updates
 let child = document.querySelector('div h2');
-child.style.color = "white";
+child.style.color = "orange";
 // child.style.backgroundColor = "blue";
 h1.style.fontFamily = "Gilroy";
 
@@ -85,3 +92,4 @@ let list = document.querySelectorAll('ul li:nth-child(2n');
 list.forEach(function (val) {
     val.classList.add('highlight');
 });
+
