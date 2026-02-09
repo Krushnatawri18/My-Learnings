@@ -160,3 +160,16 @@ document.querySelector('h2').classList.remove('style-h2');
 
 document.querySelector('h2').classList.toggle('style-h2');
 ```
+
+4. `Event Handling`
+
+i. `click`
+
+ii. `dblclick`
+
+iii. `input`
+- For looking any change either addition of text or backspace in input box.
+
+iv. `change`
+- Fired for <input>, <select> and <textarea> whenever user moodifies the element's value.
+- Change event doesn't fire for <input> until the control loses the focus.

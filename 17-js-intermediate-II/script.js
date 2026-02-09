@@ -93,3 +93,49 @@ list.forEach(function (val) {
     val.classList.add('highlight');
 });
 
+// Event handling
+let p = document.querySelector('.test');
+function dblclick() {
+    console.log('clicked')
+    p.style.color = 'green';
+}
+
+// on double click it will add dblclick event listener
+p.addEventListener('dblclick', dblclick);
+
+// on double click it will remove dblclick event listener
+p.removeEventListener('dblclick', dblclick);
+
+let input = document.querySelector('#inputbox');
+function inputEvent(event){
+    // if(event.data === null) // backspace input change case
+
+    // for not a backspace input change
+    if(event.data !== null){
+        console.log('input', event.data);
+    }
+}
+
+// for checking any change in input
+input.addEventListener('input', inputEvent);
+
+// change event
+let select = document.querySelector('select');
+let label = document.querySelector('label');
+select.addEventListener('change', function(e) {
+    label.textContent = `${e.target.value} selected`
+});
+
+input.addEventListener('change', function(e) {
+    console.log('data', e.target.value)
+})
+
+let skillsDiv1 = document.querySelector('#skills1');
+skillsDiv1.addEventListener('change', (e) => {
+    console.log(e.target.value, e.target.checked)
+})
+
+let skillsDiv2 = document.querySelector('#skills2');
+skillsDiv2.addEventListener('change', (e) => {
+    console.log(e.target.value, e.target.checked)
+})
