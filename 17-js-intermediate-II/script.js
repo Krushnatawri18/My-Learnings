@@ -139,3 +139,40 @@ let skillsDiv2 = document.querySelector('#skills2');
 skillsDiv2.addEventListener('change', (e) => {
     console.log(e.target.value, e.target.checked)
 })
+
+let h4 = document.querySelector('h4');
+// keydown
+window.addEventListener('keydown', function (e) {
+    // for space bar
+    if (e.key === ' ') {
+        h4.textContent = 'SPC';
+    } else {
+        h4.textContent = e.key;
+    }
+});
+
+// replacing input type file with our button and using its functionality for our button
+let inputBtn = document.querySelector('#inputBtn');
+let fileInput = document.querySelector('.inputFile');
+
+inputBtn.addEventListener('click', function () {
+    fileInput.click();
+});
+
+// whenver anything like file updated or changed, this will be called
+fileInput.addEventListener('change', function (e) {
+    const file = e.target.files[0];
+    console.log(file)
+    if (file) {
+        inputBtn.textContent = file.name;
+    }
+});
+
+// submit
+let form = document.querySelector('form');
+let inputs = document.querySelectorAll('.form-input');
+
+form.addEventListener('submit', function (e) {
+    console.log(inputs[0].value, inputs[1].value);
+    e.preventDefault(); // prevents default behavior of removing all data when page reloads or form submits
+});

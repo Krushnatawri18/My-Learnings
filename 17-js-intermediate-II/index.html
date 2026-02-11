@@ -13,6 +13,44 @@
         .highlight{
             color: bisque;
         }
+
+        .inputFile {
+            display: none;
+        }
+
+        #inputBtn {
+            background-color: green;
+            color: white;
+            padding: 6px;
+            border-radius: 5px;
+        }
+
+        #inputBtn:hover {
+            background-color: rgb(2, 46, 2);
+            cursor: pointer;
+        }
+
+        .card {
+            margin: 10px 2px;
+            padding: 10px;
+            border: 1px solid black;
+            max-width: 200px;
+            color: beige;
+        }
+        
+        .card .profile {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .card .profile img{
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+
     </style>
 </head>
 
@@ -61,6 +99,28 @@
         <input type="radio" name="skill" value="js" /> JS
         <input type="radio" name="skill" value="react" /> React
         <input type="radio" name="skill" value="node" /> Node
+    </div>
+
+    <h4>p</h4>
+
+    <input type="file" class="inputFile" />
+    <button id="inputBtn">
+        Upload file
+    </button><br><br>
+
+    <form action="">
+        <input class="form-input" type="text" placeholder="name"><br><br>
+        <input class="form-input" type="text" placeholder="profile pic"><br><br>
+        <input class="form-input" type="text" placeholder="age"><br><br>
+        <input class="form-input" type="submit" value="Submit">
+    </form>
+
+    <div class="card">
+        <div class="profile">
+            <img src="https://images.unsplash.com/photo-1597218601865-2a6ab194902e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c29sb3xlbnwwfHwwfHx8MA%3D%3D" alt="profile-pic">
+        </div>
+        <h5>Rohit Sharma</h5>
+        <h6>36</h6>
     </div>
 
     <script src="script.js"></script>
