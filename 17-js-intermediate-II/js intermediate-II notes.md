@@ -173,3 +173,17 @@ iii. `input`
 iv. `change`
 - Fired for <input>, <select> and <textarea> whenever user moodifies the element's value.
 - Change event doesn't fire for <input> until the control loses the focus.
+
+v. `keydown`
+- When key is pressed like you didn't release the key, you are just pressed and pressing it.
+
+vi. `submit`
+
+vii. `mouseover`
+
+viii. `mouseout`
+
+ix. `mousemove`
+
+x. `keyup`
+- When key is released like you released the keyboard button, happens after keydown as key is being pressed.

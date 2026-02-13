@@ -171,8 +171,68 @@ fileInput.addEventListener('change', function (e) {
 // submit
 let form = document.querySelector('form');
 let inputs = document.querySelectorAll('.form-input');
+let main = document.querySelector('.main');
 
 form.addEventListener('submit', function (e) {
     console.log(inputs[0].value, inputs[1].value);
     e.preventDefault(); // prevents default behavior of removing all data when page reloads or form submits
+
+    let card = document.createElement('div');
+    card.classList.add('card');
+
+    let profile = document.createElement('div');
+    profile.classList.add('profile');
+    
+    let image = document.createElement('img');
+    image.setAttribute('src', inputs[1].value);
+    
+    let h3 = document.querySelector('h3');
+    h3.textContent = inputs[0].value;
+    
+    let p = document.querySelector('p');
+    p.textContent = inputs[2].value;
+    
+    profile.appendChild(image);
+    card.appendChild(profile);
+    card.appendChild(h3);
+    card.appendChild(p);
+
+    main.append(card);
+
+    // now clear all the inputs
+    inputs.forEach(function(inp) {
+        if (inp.type !== 'submit')
+            inp.value = "";
+    });
 });
+
+// mouseover
+let mouseOver = document.querySelector('.mouse-over');
+mouseOver.addEventListener('mouseover', function (){
+    mouseOver.style.backgroundColor = "aqua"
+});
+
+// mouseout
+mouseOver.addEventListener('mouseout', function (){
+    mouseOver.style.backgroundColor = "white"
+});
+
+// mousemove
+let mouseMove = document.querySelector('.mouse-move');
+window.addEventListener('mousemove', function (e) {
+    // console.log(e.clientX, e.clientY);
+    mouseMove.style.top = e.clientY + 'px';
+    mouseMove.style.left = e.clientX + 'px';
+});
+
+// keyup
+let keyUp = document.querySelector('.key-up');
+keyUp.addEventListener('keyup', function (e) {
+    console.log(e);
+});
+
+// keydown
+let keyDown = document.querySelector('.key-down');
+keyDown.addEventListener('keydown', function (e) {
+    console.log(e);
+})
