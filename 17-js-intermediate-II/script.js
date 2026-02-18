@@ -236,3 +236,46 @@ let keyDown = document.querySelector('.key-down');
 keyDown.addEventListener('keydown', function (e) {
     console.log(e);
 })
+
+// Event Bubbling
+// if button is clicked then event listener of nav will be always called after button's event listener is called if has any or even if not have any listener on button
+let nav = document.querySelector('#nav');
+nav.addEventListener('click', function() {
+    alert('Nav Clicked');
+});
+
+// after nav's event listener is called now it will call parent's event listener
+let parent = document.querySelector('#parent');
+nav.addEventListener('click', function() {
+    alert('Parent Clicked');
+});
+
+document.querySelector('.fruits').addEventListener('click', function(e) {
+    e.target.classList.toggle('lt');
+});
+
+// Event Capturing
+let aDiv = document.querySelector('.a');
+let bDiv = document.querySelector('.b');
+let cDiv = document.querySelector('.c');
+let button = document.querySelector('.btn');
+
+// to start capture mode just add true here
+// first event capturing (if turned on) + target element event + event bubbling
+aDiv.addEventListener('click', function () {
+    console.log('a clicked');
+}, true);
+
+bDiv.addEventListener('click', function () {
+    console.log('b clicked');
+});
+
+cDiv.addEventListener('click', function () {
+    console.log('c clicked');
+}, true);
+
+button.addEventListener('click', function (e) {
+    // will not move any event after this button clicked event
+    e.stopPropagation(); // a clicked -> c clicked -> button clicked
+    console.log('button clicked');
+});

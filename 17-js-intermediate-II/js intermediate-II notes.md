@@ -171,8 +171,8 @@ iii. `input`
 - For looking any change either addition of text or backspace in input box.
 
 iv. `change`
-- Fired for <input>, <select> and <textarea> whenever user moodifies the element's value.
-- Change event doesn't fire for <input> until the control loses the focus.
+- Fired for input, select and textarea tag whenever user moodifies the element's value.
+- Change event doesn't fire for input tag until the control loses the focus.
 
 v. `keydown`
 - When key is pressed like you didn't release the key, you are just pressed and pressing it.
@@ -187,3 +187,54 @@ ix. `mousemove`
 
 x. `keyup`
 - When key is released like you released the keyboard button, happens after keydown as key is being pressed.
+
+5. `Event Bubbling`
+- Event starts at target element and then bubbles upward to its parent element till html.
+- By default behavior.
+- Event bubbling occurs everytime after event capturing if turned on or even set to off.
+
+6. `Event Capturing`
+- Event starts at the top of the DOM tree and travels down to the target element.
+- Need to start capturing mode and then bubbling will follow.
+```js
+document.getElementById("parent").addEventListener(
+  "click",
+  () => {
+    console.log("Div clicked (capturing)");
+  },
+  true // enables capturing
+);
+```
+
+7. `Event Propagation`
+- Process by which an event travels through the DOM after its triggered.
+- Stopping event propagation with `e.stopPropagation()` will prevent bubbling or capturing from continuing.
+
+a. `Capturing phase (top -> down)`
+
+b. `Target phase (the clicked element)`
+
+c. `Bubbling phase (bottom -> up)`
+
+8. `Event Delegation`
+- Process of applying single event listener over parent to handle events of child elements.
+- Works because of event bubbling.
+```js
+// Not optimal way - as adding n event listeners for n buttons, causing more memory usage for creating function
+document.querySelectorAll("button").forEach(button => {
+  button.addEventListener("click", () => {
+    console.log("Button clicked");
+  });
+});
+
+// doesn't handle dynamically added elements as querySelectorAll runs once up there
+const newButton = document.createElement("button");
+document.body.appendChild(newButton);
+
+// Efficient way - as have only single event listener running for clicked buttons and also handles dynamically added elements
+document.getElementById("parent").addEventListener("click", (event) => {
+  if (event.target.tagName === "BUTTON") {
+    console.log("Button clicked");
+  }
+});
+```
