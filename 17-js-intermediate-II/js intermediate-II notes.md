@@ -238,3 +238,18 @@ document.getElementById("parent").addEventListener("click", (event) => {
   }
 });
 ```
+
+9. `Form Validation`
+
+a. `Inline validation`
+- Client side validation.
+```js
+<input type="email" placeholder="email" id="email" minlength="7" maxlength="20" required>
+```
+
+b. `Pattern attribute`
+- An html attribute to define custom regular expression for validation.
+```js
+// allows a to z character with limiting characters from 3 to 8
+<input type="text" pattern="[a-z]{3,8}" placeholder="name" id="name">
+```

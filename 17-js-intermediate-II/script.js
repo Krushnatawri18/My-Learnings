@@ -279,3 +279,24 @@ button.addEventListener('click', function (e) {
     e.stopPropagation(); // a clicked -> c clicked -> button clicked
     console.log('button clicked');
 });
+
+// Form Validation
+let formName = document.querySelector('#name');
+let formEmail = document.querySelector('#email');
+let formValidation = document.querySelector('.form-validation');
+
+formValidation.addEventListener('submit', function (e) {
+    // will stop the form to be submitted
+    e.preventDefault();
+
+    if (formName.value.length <= 1) {
+        document.querySelector('#hide').style.display = "initial";
+    }
+    else {
+        document.querySelector('#hide').style.display = "none";
+    }
+
+    // email validation with regex
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    regex.test(formEmail.value);
+})
