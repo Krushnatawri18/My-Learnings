@@ -266,6 +266,7 @@ aDiv.addEventListener('click', function () {
     console.log('a clicked');
 }, true);
 
+// now it behaves like event bubbling and executes after event capturing listeners
 bDiv.addEventListener('click', function () {
     console.log('b clicked');
 });

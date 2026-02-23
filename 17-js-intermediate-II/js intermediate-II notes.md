@@ -208,7 +208,72 @@ document.getElementById("parent").addEventListener(
 
 7. `Event Propagation`
 - Process by which an event travels through the DOM after its triggered.
-- Stopping event propagation with `e.stopPropagation()` will prevent bubbling or capturing from continuing.
+
+a. `e.stopPropagation`
+- Stopping event propagation with `e.stopPropagation()` will prevent bubbling or capturing from continuing (works for both capturing and bubbling case).
+```js
+let a = document.querySelector('.a');
+let b = document.querySelector('.b');
+let c = document.querySelector('.c');
+let button = document.querySelector('.btn');
+
+// event bubbling
+button.addEventListener('click', function (){
+    console.log('button clicked')
+});
+
+c.addEventListener('click', function (e){
+    // will stop propagating to top after this event listener
+    e.stopPropagation(); 
+    console.log('c clicked')
+});
+
+// this will still execute even after stopPropagation as have event listener over the same element
+c.addEventListener('click', function (e){
+    console.log('c clicked again')
+});
+
+// output - 
+// button clicked
+// c clicked
+// c clicked again
+```
+
+b. `e.stopImmediatePropagation`
+- Not only stops the event from propagating to other elements but also prevents any remaining event listeners on the same element from executing (works in both capturing and bubbling case).
+- Stricter version of stopPropagation.
+```js
+let a = document.querySelector('.a');
+let b = document.querySelector('.b');
+let c = document.querySelector('.c');
+let button = document.querySelector('.btn');
+
+// event capturing
+button.addEventListener('click', function (e){
+    console.log('button clicked !')
+}, true);
+
+c.addEventListener('click', function (e){
+    console.log('c clicked !')
+}, true);
+
+b.addEventListener('click', function (e){
+    console.log('b clicked !')
+}, true);
+
+a.addEventListener('click', function (e){
+    // will stictly stop propagating downward after this event listener
+    e.stopImmediatePropagation();
+    console.log('a clicked !')
+}, true);
+
+a.addEventListener('click', function (e){
+    console.log('a clicked again !')
+}, true);
+
+// output - 
+// a clicked !
+```
 
 a. `Capturing phase (top -> down)`
 
