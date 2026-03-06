@@ -318,3 +318,11 @@ b. `Pattern attribute`
 // allows a to z character with limiting characters from 3 to 8
 <input type="text" pattern="[a-z]{3,8}" placeholder="name" id="name">
 ```
+
+10. `SetTimeout`
+- Runs the function once after certain delay ms.
+- Returns an id to cancel the timeout.
+
+11. `SetInterval`
+- Runs the function repeatedly after certain delay ms.
+- Returns an id to cancel the interval.

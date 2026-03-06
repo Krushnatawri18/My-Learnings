@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple Download Simulation</title>
+    <style>
+        body {
+            background: #f2f2f2;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .alert-box {
+            width: 350px;
+            color: red;
+            background-color: white;
+            padding: 20px;
+            border: 1px solid beige;
+            border-radius: 10px;
+        }
+
+        .box {
+            width: 350px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .progress-container {
+            width: 100%;
+            background: #ddd;
+            border-radius: 25px;
+            overflow: hidden;
+            height: 20px;
+            margin-top: 15px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #4caf50;
+            width: 0%;
+        }
+
+        #percent {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            border: none;
+            background: #4caf50;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="alert-box">
+        <h3>Alert ! You're learning setTimeout and setInterval in Js</h3>
+    </div>
+
+    <div class="box">
+        <h2>Downloading...</h2>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="bar"></div>
+        </div>
+
+        <div id="percent">0%</div>
+
+        <button onclick="startDownload()">Start Download</button>
+    </div>
+
+    <script src="timeout_and_interval.js"></script>
+
+</body>
+
+</html>
