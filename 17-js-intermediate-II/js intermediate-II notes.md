@@ -326,3 +326,85 @@ b. `Pattern attribute`
 11. `SetInterval`
 - Runs the function repeatedly after certain delay ms.
 - Returns an id to cancel the interval.
+
+12. `localStorage`
+- Saves the small bits of data persistently on the user's device.
+- Data stays even after the tab or window is closed or machine restarts, until you clear it.
+- 5-10 Mb data stored.
+
+a. `setItem`
+- Sets the value of an item as key-value pair.
+- Sets the value in string format.
+
+b. `getItem`
+- To fetch the value of an item.
+
+c. `removeItem`
+- To remove particular item from localStorage.
+
+d. `clear`
+- To clear out all items stored in localStorage.
+
+```js
+// storing theme as item
+localStorage.setItem('theme', 'dark');
+
+// fetching theme value
+const theme = localStorage.getItem('theme'); // "dark" or null if not set
+
+// removing item
+localStorage.removeItem('theme');
+
+// deleting all items
+localStorage.clear();
+```
+
+### `Note`
+- As value of an item is stored in string format, we need to convert particular datatype like array or object into string format so that they maintain their structure even after conversion.
+eg.
+```js
+localStorage.setItem('friends', ['aman', 'baman']) // value stored as 'aman, baman'
+localStorage.getItem('friends') // value fetched as '["aman","baman"]'
+
+localStorage.setItem('key', {one: 'parth', two: 'karna'}) // value stored as "[object Object]"
+localStorage.getItem('key') // value fetched as '{"one":"parth","two":"karna"}'
+
+// conversion of array to stringc
+localStorage.setItem('friends', JSON.stringify(['aman', 'baman'])) // value stored as "[\"aman\",\"baman\"]"
+localStorage.setItem('key', JSON.stringify({one: 'parth', two: 'karna'})) // value stored as '{"one":"parth","two":"karna"}'
+
+const val = JSON.parse(localStorage.getItem('friends')); // value fetched as ['aman', 'baman']
+const val = JSON.parse(localStorage.getItem('key')); // value fetched as {one: 'parth', two: 'karna'}
+```
+
+13. `sessionStorage`
+- Data lives only for one browser tab or session.
+- 5-10 Mb data stored.
+eg.
+```js
+// storing theme as item
+sessionStorage.setItem('theme', 'dark');
+
+// fetching theme value
+const theme = sessionStorage.getItem('theme'); // "dark" or null if not set
+
+// removing item
+sessionStorage.removeItem('theme');
+
+// deleting all items
+sessionStorage.clear();
+```
+
+14. `cookie`
+- Data lives only for one browser tab, deleted when browser is closed, called as session cookie.
+- 4 kb data is stored only.
+- Sent to server on every request.
+eg.
+```js
+document.cookie = "email=demo@mail.com";
+document.cookie = "age=26";
+
+// expiration
+document.cookie = "theme=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";  // path is on which site the cookie applies to (whole site, not sub-domain of site)
+document.cookie = "theme=dark; Secure; path=/" // won't send requests to server if our site is http, only send when our site is https
+```

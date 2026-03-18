@@ -488,7 +488,7 @@ const globe = {
 };
 
 Object.freeze(globe)
-globe["Russia"] = "Moscow";  // can't add new property, even it doesn't give any error
+globe["Russia"] = "Moscow";  // can't add new property
 globe["India"] = "Delhi";  // even can't change existing properties
 delete globe['China'];  // even can't remove existing properties 
 
