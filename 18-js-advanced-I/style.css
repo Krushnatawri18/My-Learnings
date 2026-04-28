@@ -1,0 +1,143 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.form-container {
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 350px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #555;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #007BFF;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+/* User cards section */
+.users {
+  margin-top: 40px;
+}
+
+.users h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.user-cards {
+  display: flex;
+  flex-direction: row;   /* ensures row-wise alignment */
+  flex-wrap: wrap;       /* allows wrapping to next line if too many cards */
+  gap: 20px;             /* spacing between cards */
+  justify-content: flex-start; /* align cards from left to right */
+}
+
+.user-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.user-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+/* Circular avatar */
+.user-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 3px solid #6a5acd;
+}
+
+.user-name {
+  margin-bottom: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #6a5acd;
+}
+
+.user-profession {
+  margin-bottom: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #444;
+}
+
+.user-bio {
+  font-size: 14px;
+  margin-bottom: 12px;
+  color: #555;
+}
+
+.user-url {
+  display: inline-block;
+  text-decoration: none;
+  color: #6a5acd;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.user-url:hover {
+  color: #483d8b;
+}
+
+.remove-user {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+}
